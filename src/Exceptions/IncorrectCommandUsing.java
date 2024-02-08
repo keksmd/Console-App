@@ -1,10 +1,10 @@
 package Exceptions;
 
-public class IncorrectDataInput extends RuntimeException{
-    public IncorrectDataInput(){
+public class IncorrectCommandUsing extends RuntimeException{
+    public IncorrectCommandUsing(){
         super();
     }
-    public IncorrectDataInput(String s){
+    public IncorrectCommandUsing(String s){
         super(s);
     }
 }

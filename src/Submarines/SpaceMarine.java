@@ -69,4 +69,7 @@ public class SpaceMarine {
         }
     }
 
+    public String getName(String name) {
+        return name;
+    }
 }

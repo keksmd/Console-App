@@ -1,6 +1,6 @@
 package utilites;
 
-import Exceptions.IncorrectCommandInput;
+import Exceptions.IncorrectCommandUsing;
 
 import java.util.Scanner;
 import java.util.function.Supplier;
@@ -43,31 +43,21 @@ public class CheckingReader {
                 check = sc::hasNextLine;
                 break;
         }
+            if(check == null){
+                throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
+            }
             if(check.get()){
-                switch (type){
-                    case "b":
-                        o = (Boolean)append.get();
-                        break;
-                    case "i":
-                        o = (Integer)append.get();
-                        break;
-                    case "l":
-                        o = (Long)append.get();
-                        break;
-                    case "f":
-                        o = (Float)append.get();
-                        break;
-                    case "s":
-                        o = (String)append.get();
-                        break;
-                    default:
-                        System.out.println("Type must be i(int)/l(long)/f(float)/s(string)/b(boolean)");///// перепис
-                        break;
-                }
+                o = switch (type) {
+                    case "b" -> (Boolean) append.get();
+                    case "i" -> (Integer) append.get();
+                    case "l" -> (Long) append.get();
+                    case "f" -> (Float) append.get();
+                    case "s" -> (String) append.get();
+                    default -> o;
+                };
                 if(proove(type,uslovie,o)){
                     return o;
-                }
-                return checkyRead(type,uslovie,("Значение не подходит по размеру,еще раз\n"+comment).replace("Вы ошиблись,еще раз\nВы ошиблись,еще раз\n","Вы ошиблись,еще раз\n"));
+                }else return checkyRead(type,uslovie,("Значение не подходит по размеру,еще раз\n"+comment).replace("Вы ошиблись,еще раз\nВы ошиблись,еще раз\n","Вы ошиблись,еще раз\n"));
             }
             return checkyRead(type,uslovie,("Вы ошиблись,еще раз\n"+comment).replace("Вы ошиблись,еще раз\nВы ошиблись,еще раз\n","Вы ошиблись,еще раз\n"));
     }
@@ -86,7 +76,7 @@ public class CheckingReader {
                                 if ((Long) o <= new Scanner(words[2]).nextLong()) {
                                     right = false;}
                             } else {
-                                System.out.println("Unchecked eror reader is bad");///// переписать
+                                throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
                             }
                             break;
                         case "less":
@@ -94,13 +84,13 @@ public class CheckingReader {
                                 if ((Long) o >= new Scanner(words[2]).nextLong()) {
                                     right = false;}
                             } else {
-                                System.out.println("Unchecked eror reader is bad");///// переписать
+                                throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
                             }
                             break;
                         default:
-                            System.out.println("Unchecked eror reader is bad");///// переписать
+                            throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
                     }} else {
-                    System.out.println("Unknown command, try again");}}
+                    throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");}}
             case "f" -> {
                 if (words.length == 3) {
                     switch (words[0]) {
@@ -109,7 +99,7 @@ public class CheckingReader {
                                 if ((Float) o <= new Scanner(words[2]).nextFloat()) {
                                     right = false;}
                             } else {
-                                System.out.println("Unchecked eror reader is bad");///// переписать
+                                throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
                             }
                             break;
                         case "less":
@@ -117,14 +107,14 @@ public class CheckingReader {
                                 if ((Float) o >= new Scanner(words[2]).nextFloat()) {
                                     right = false;}
                             } else {
-                                System.out.println("Unchecked eror reader is bad");///// переписать
+                                throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
                             }
                             break;
                         default:
-                            System.out.println("Unchecked eror reader is bad");///// переписать
+                            throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
                     }
                 } else {
-                    System.out.println("Unknown command, try again");}}
+                    throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");}}
             case "s" -> {
                 if (words.length == 3) {
                     switch (words[0]) {
@@ -134,7 +124,7 @@ public class CheckingReader {
                                     right = false;
                                 }
                             } else {
-                                System.out.println("Unchecked eror reader is bad");///// переписать
+                                throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
                             }
                             break;
                         case "less":
@@ -143,14 +133,14 @@ public class CheckingReader {
                                     right = false;
                                 }
                             } else {
-                                System.out.println("Unchecked eror reader is bad");///// переписать
+                                throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
                             }
                             break;
                         default:
-                            System.out.println("Unchecked eror reader is bad");///// переписать
+                            throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
                     }
                 } else {
-                    System.out.println("Unknown command, try again");
+                    throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
                 }
             }
         }

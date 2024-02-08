@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class IncorrectDataInput extends RuntimeException{
+public class IncorrectDataInput extends Error{
     public IncorrectDataInput(){
         super();
     }
