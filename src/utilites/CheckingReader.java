@@ -10,9 +10,9 @@ import java.util.function.Supplier;
 public class CheckingReader {
     static Class clas = null;
 
-    public static Object checkyRead(String type,String uslovie,String comment) {
+    public static Object checkyRead(String type,String uslovie,String comment,String input) {
         System.out.println(comment);
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(input);
         Supplier<?> append = null;
         Supplier<Boolean> check = null;
         Object o = null;
@@ -147,11 +147,11 @@ public class CheckingReader {
         return right;
     }
 
-    public static Object checkyRead(String type){
-        return  checkyRead(type,"","");
+    public static Object checkyRead(String type,String input){
+        return  checkyRead(type,"","",input);
     }
 
-    public static Object checkyRead(String type,String comment){
-        return  checkyRead(type,"",comment);
+    public static Object checkyRead(String type,String comment,String input){
+        return  checkyRead(type,"",comment,input);
     }
 }

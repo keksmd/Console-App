@@ -3,6 +3,8 @@ package Main;
 import Commands.*;
 import utilites.interfaces.methods;
 
+import java.util.Scanner;
+
 public class Command implements methods {
     public void calling(){}
     Command cmd;
@@ -27,7 +29,7 @@ public class Command implements methods {
                     cm.cmd = new RemoveHead();
                     break;
                 case "group_counting_by_weapon_type":
-                    //GROUP
+                    cm.cmd = new GroupByWeapon();
                     break;
                 case "print_field_descending_loyal":
                     cm.cmd = new PrintFieldDescendingLoyal();
@@ -44,19 +46,19 @@ public class Command implements methods {
                 case "add":
                     cm.cmd =  new Add();
                     break;
+                case "add_if_max":
+                    cm.cmd = new AddIfMax();
+                    break;
+                case "add_if_min":
+                    cm.cmd = new AddIfMin();
+                    break;
                 default:
                     cm.cmd = new NotFound();
             }
         } else if (words.length == 2) {
             switch (words[0]){
-                case "add_if_max":
-                    //ADD max
-                    break;
-                case "add_if_min":
-                    //ADD min
-                    break;
                 case "update id":
-                    //UPD
+                    cm.cmd = new UpdateById(words[1]);
                     break;
                 case "execute_script":
                     //file
@@ -67,6 +69,7 @@ public class Command implements methods {
                 case "filter_greater_than_height":
                     //FILTER
                     break;
+
 
                 default:
                     cm.cmd = new NotFound();

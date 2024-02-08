@@ -10,7 +10,7 @@ import utilites.interfaces.methods;
 
 import static utilites.CheckingReader.checkyRead;
 
-public class AddIfMin extends Command implements methods{
+public class AddIfMax extends Command implements methods{
     public void calling() {
         String name =(String) checkyRead("s", "more length 0", "Введите имя");
                 Coordinates coords = new Coordinates(
@@ -28,12 +28,10 @@ public class AddIfMin extends Command implements methods{
                 Chapter chap = new Chapter(
                         (String) checkyRead("s", "Введите название главы"),
                         (String) checkyRead("s", "Введите название мира"));
-                SpaceMarine last = null;
-                while(!App.que.isEmpty()){
-                    last = App.que.poll();
-                }
-            if(new SpaceMarine(name,coords,health,loyal,height,gun,chap).compareTo(last)>0){
-                App.que.add(new SpaceMarine(name,coords,health,loyal,height,gun,chap));
+
+        if(new SpaceMarine(name,coords,health,loyal,height,gun,chap).compareTo(App.que.peek())>0){
+            App.que.add(
+                    new SpaceMarine(name,coords,health,loyal,height,gun,chap));
         }
     }
 }
