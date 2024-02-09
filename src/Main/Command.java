@@ -41,7 +41,7 @@ public class Command implements methods {
                     //INFO
                     break;
                 case "save":
-                    //SAVING
+                    cm.cmd = new Save();
                     break;
                 case "add":
                     cm.cmd =  new Add();
