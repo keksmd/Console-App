@@ -4,16 +4,22 @@ import Main.App;
 import Main.Command;
 import utilites.interfaces.methods;
 
+import java.time.LocalDate;
+
 public class RemoveById extends Command implements methods{
-    String idToRemove;
+    final String idToRemove;
     public RemoveById(String id){
         this.idToRemove = id;
     }
-    public void calling(){
-        if(App.que.stream().anyMatch(w->String.valueOf(w.getId()).equals(idToRemove))) {
-            App.que.removeIf(c -> c.getId() == Integer.valueOf(idToRemove));
+    public boolean calling(){
+        if(App.collection.stream().anyMatch(w->String.valueOf(w.getId()).equals(idToRemove))) {
+            App.collection.removeIf(c -> c.getId() == Integer.parseInt(idToRemove));
+
+            App.lastUpdated = LocalDate.now();
+            return true;
         }else{
-            System.out.println("Ошибка, не существует элеента с таким ID");
+            System.out.println("Ошибка, не существует элемента с таким ID");
+            return false;
         }
     }
 

@@ -6,8 +6,9 @@ import utilites.interfaces.methods;
 import java.util.Scanner;
 
 public class NotFound extends Command implements methods{
-    public void calling(){
+    public boolean calling(){
         System.out.println("Unknown command,try again or use 'help' toget information about aviable commands");
         new Command().commandReader(new Scanner(System.in).nextLine()).getCmd().calling();
+        return true;
     }
 }

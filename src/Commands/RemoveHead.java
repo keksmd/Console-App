@@ -5,7 +5,8 @@ import Main.Command;
 import utilites.interfaces.methods;
 
 public class RemoveHead extends Command implements methods{
-    public void calling(){
-        App.que.poll();
+    public boolean calling(){
+        App.collection.poll();
+        return true;
     }
 }

@@ -5,16 +5,23 @@ import Main.Command;
 import Submarines.SpaceMarine;
 import utilites.interfaces.methods;
 
+import java.time.LocalDate;
+
 public class UpdateById extends Command implements methods{
-    String idToUpdate;
+    final String idToUpdate;
     public UpdateById(String id){
         this.idToUpdate = id;
     }
-    public void calling(){
-        for(SpaceMarine c: App.que){
-            if(c.getId() == Integer.valueOf(idToUpdate)){
+    public boolean calling(){
+        boolean flag = false;
+        for(SpaceMarine c: App.collection){
+            if(c.getId() == Integer.parseInt(idToUpdate)){
                 c.update();
+                flag = true;
+                App.lastUpdated = LocalDate.now();
             }
         }
+
+        return flag;
     }
 }

@@ -4,8 +4,9 @@ import Main.*;
 import utilites.interfaces.*;
 
 public class Exit extends Command implements methods{
-    public void calling(){
+    public boolean calling(){
         App.flag = false;
+        return true;
 
     }
 }

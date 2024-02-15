@@ -6,28 +6,26 @@ import Submarines.SpaceMarine;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import utilites.interfaces.methods;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.PriorityQueue;
-import com.fasterxml.jackson.core.*;
-
 
 
 public class Save extends Command implements methods{
-    public void calling(){
-        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(App.fileName))) {
+    public boolean calling(){
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(App.fileName));
+             BufferedOutputStream time = new BufferedOutputStream(new FileOutputStream(App.dateFileName)) ) {
                 ObjectMapper objectMapper = new ObjectMapper();
 
-            Iterator<SpaceMarine> iterator = App.que.iterator();
+            Iterator<SpaceMarine> iterator = App.collection.iterator();
 
             while(iterator.hasNext()){
-                iterator.next();
                 String jsonString = objectMapper.writeValueAsString(iterator.next());
                 bos.write(jsonString.getBytes());
             }
+
+            time.write(App.lastUpdated.toString().getBytes());
     }catch (IOException e){
             throw new RuntimeException();
         }
-
+        return true;
     }
 }

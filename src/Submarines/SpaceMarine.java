@@ -3,6 +3,7 @@ package Submarines;
 import Main.App;
 
 import java.lang.reflect.Field;
+import java.time.LocalDate;
 
 import static java.time.LocalDateTime.now;
 import static utilites.CheckingReader.checkyRead;
@@ -26,12 +27,20 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         this.weaponType = gun;
         this.chapter = ch;
         this.height = height;
-        this.id = App.que.size();
+        this.id = App.collection.size();
         this.creationDate = now();
+
+        App.lastUpdated = LocalDate.now();
 
     }
 
+    public SpaceMarine(){}
+    public float getHeight(){
+        return this.height;
+    }
+
     public SpaceMarine update() {
+        App.lastUpdated = LocalDate.now();
 
         this.name = (String) checkyRead("s", "more length 0", "Введите имя");
 
@@ -43,11 +52,13 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         this.loyal = (Boolean) checkyRead("b", "Введите loyal (true/false)");
         this.height = (Float) checkyRead("f", "Введите height");
         this.weaponType = Weapon.choose(
-                (String) checkyRead("s", "Введите одно из названия для оружия:\n BOLT_PISTOL,\n" +
-                        "    COMBI_PLASMA_GUN,\n" +
-                        "    GRENADE_LAUNCHER,\n" +
-                        "    INFERNO_PISTOL,\n" +
-                        "    MULTI_MELTA"));
+                (String) checkyRead("s", """
+                        Введите одно из названия для оружия:
+                         BOLT_PISTOL,
+                            COMBI_PLASMA_GUN,
+                            GRENADE_LAUNCHER,
+                            INFERNO_PISTOL,
+                            MULTI_MELTA"""));
         this.chapter = new Chapter(
                 (String) checkyRead("s", "Введите название главы"),
                 (String) checkyRead("s", "Введите название мира"));
@@ -74,8 +85,8 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         }
     }
 
-    public String getName(String name) {
-        return name;
+    public String getName() {
+        return this.name;
     }
 
     @Override

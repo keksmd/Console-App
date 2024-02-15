@@ -3,10 +3,12 @@ package Main;
 import Commands.*;
 import utilites.interfaces.methods;
 
-import java.util.Scanner;
+import static utilites.CheckingReader.checkyRead;
 
 public class Command implements methods {
-    public void calling(){}
+    public boolean calling(){
+        return true;
+    }
     Command cmd;
     public Command getCmd() {
         return cmd;
@@ -14,7 +16,17 @@ public class Command implements methods {
     public Command commandReader(String str){
         Command cm = new Command();
         String[] words = str.split(" ");
-        if(words.length ==1){
+        if(str.startsWith("add")){
+            String[] args = str.split(" ");
+            if(args.length!=5){
+                cm.cmd = new WrongArguments();
+            }else if(str.startsWith("add_if_min")){
+                    cm.cmd = new AddIfMin(args);
+            } else if (str.startsWith("add_if_max")) {
+                cm.cmd = new AddIfMax(args);
+            }else cm.cmd = new Add(args);
+
+        }else if(words.length ==1){
             switch (str){
                 case "help":
                     cm.cmd = new Help();
@@ -38,20 +50,12 @@ public class Command implements methods {
                     //SHOW
                     break;
                 case "info":
-                    //INFO
+                    cm.cmd = new Info();
                     break;
                 case "save":
                     cm.cmd = new Save();
                     break;
-                case "add":
-                    cm.cmd =  new Add();
-                    break;
-                case "add_if_max":
-                    cm.cmd = new AddIfMax();
-                    break;
-                case "add_if_min":
-                    cm.cmd = new AddIfMin();
-                    break;
+
                 default:
                     cm.cmd = new NotFound();
             }
@@ -61,21 +65,19 @@ public class Command implements methods {
                     cm.cmd = new UpdateById(words[1]);
                     break;
                 case "execute_script":
-                    //file
+                    cm.cmd = new Exexute((String)checkyRead("s",words[1]));
                     break;
                 case "remove_by_id":
                    cm.cmd = new RemoveById(words[1]);
                     break;
                 case "filter_greater_than_height":
-                    //FILTER
+                    cm.cmd = new FilterHeight((int)(checkyRead("i",words[1])));
                     break;
-
-
                 default:
                     cm.cmd = new NotFound();
             }
         }else{
-            cm.cmd = new NotFound();
+             cm.cmd = new NotFound();
         }
 
         return cm;
