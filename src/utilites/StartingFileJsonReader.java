@@ -1,41 +1,38 @@
 package utilites;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.PriorityQueue;
 
-import Main.App;
-import Submarines.SpaceMarine;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import submarines.SpaceMarine;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 
 public class StartingFileJsonReader {
-    public static <T, C extends Collection<T>> void readAndUpdate(String fileName, C collection) {
-        try (FileReader fis = new FileReader(fileName);
+    public static <T> ArrayList<T> readAndUpdate(String fileName) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setDateFormat(new SimpleDateFormat("dd-MM-yyyy hh:mm"));
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        ArrayList<T> data = new ArrayList<>();
+               try (FileReader fis = new FileReader(fileName);
              BufferedReader bfr = new BufferedReader(fis)){
             String line;
-            StringBuilder fileContent = new StringBuilder();
             while ((line = bfr.readLine()) != null) {
-                fileContent.append(line);
+                data.add(mapper.readerFor(new TypeReference<T>() {}).readValue(line));
             }
-
-            convert(fileContent.toString(), collection);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static <T, C extends Collection<T>> void convert(String json, C collection) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        //T data = mapper.readValue(json, new TypeReference<T>() {
-        //});
-        //collection.add(data);
-        //App.collection = mapper.readValue(json, new TypeReference<PriorityQueue<SpaceMarine>>() {
-        //});ArrayList<SpaceMarine>();
-        App.collection.add(mapper.readValue(json, new TypeReference<SpaceMarine>() {}));
+               return data;
 
     }
+
 }

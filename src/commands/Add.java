@@ -1,11 +1,11 @@
-package Commands;
+package commands;
 
-import Main.App;
-import Main.Command;
-import Submarines.Chapter;
-import Submarines.Coordinates;
-import Submarines.SpaceMarine;
-import Submarines.Weapon;
+import main.App;
+import main.Command;
+import submarines.Chapter;
+import submarines.Coordinates;
+import submarines.SpaceMarine;
+import submarines.Weapon;
 import utilites.interfaces.methods;
 
 import java.time.LocalDate;
@@ -24,12 +24,14 @@ public class Add extends Command implements methods{
                         (String) checkyRead("s","more length 0","",inputs[1]),
                         new Coordinates(
                                 (Long)checkyRead("l","less than 626","Введите целочисленную x-координату (x<=625)","sin") ,
-                                //(Float) checkyRead("f","more than -353.0","Введите y-координату в формате деcятичной дроби (y>=-354.0)","sin")),
-3.3f),
+                                //(Float) checkyRead("f","more than -353.0","Введите y-координату в формате деcятичной дроби (y>=-354.0)","3.3")),
+                                6.6f),
+//3.3f),
                         (Long)checkyRead("l",inputs[2]),
                 (Boolean) checkyRead("b",inputs[3]),
-                //(Float)checkyRead("f",inputs[4]),
-                        4.4f,
+                //(Float)checkyRead("f","4.4"),
+                        5.5f,
+                        //4.4f,
                         Weapon.choose(
                         (String)checkyRead("s","is weapon","""
                                 Введите одно из названия для оружия:

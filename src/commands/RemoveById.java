@@ -1,7 +1,7 @@
-package Commands;
+package commands;
 
-import Main.App;
-import Main.Command;
+import main.App;
+import main.Command;
 import utilites.interfaces.methods;
 
 import java.time.LocalDate;

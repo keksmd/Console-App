@@ -1,6 +1,6 @@
-package Commands;
+package commands;
 
-import Main.Command;
+import main.Command;
 import utilites.interfaces.methods;
 
 import java.io.File;

@@ -1,17 +1,22 @@
-package Submarines;
+package submarines;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 
 public class Chapter {
+    @JsonIgnore
     static ArrayList<Chapter> chapters = new ArrayList<>();
     private String name; //Поле не может быть null, Строка не может быть пустой
     private String parentLegion;
     private String world; //Поле не может быть null
+
     public Chapter(String n,String w){
         world=w;
         name = n;
         this.parentLegion = "";
     }
+public Chapter(){};
     public Chapter createChapter(String n,String w){
         Chapter s = null;
         boolean flag = true;
@@ -40,4 +45,35 @@ public class Chapter {
         }
         return answ && super.equals(obj);
     }
+    @Override
+    public String toString(){
+        return name +","+ parentLegion + ","+world;
+    }
+
+    public String getWorld() {
+        return world;
+    }
+
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getParentLegion() {
+        return parentLegion;
+    }
+
+    public void setParentLegion(String parentLegion) {
+        this.parentLegion = parentLegion;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setWorld(String world) {
+        this.world = world;
+    }
+
 }

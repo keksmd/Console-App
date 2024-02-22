@@ -1,8 +1,8 @@
-package Commands;
+package commands;
 
-import Main.App;
-import Main.Command;
-import Submarines.SpaceMarine;
+import main.App;
+import main.Command;
+import submarines.SpaceMarine;
 import utilites.interfaces.methods;
 
 import java.time.LocalDate;

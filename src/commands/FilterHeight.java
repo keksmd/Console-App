@@ -1,8 +1,8 @@
-package Commands;
+package commands;
 
-import Main.App;
-import Main.Command;
-import Submarines.SpaceMarine;
+import main.App;
+import main.Command;
+import submarines.SpaceMarine;
 import utilites.interfaces.methods;
 
 public class FilterHeight extends Command implements methods{
@@ -11,7 +11,7 @@ public class FilterHeight extends Command implements methods{
         this.limit = l;
     }
     public boolean calling(){
-        App.collection.stream().filter(w->w.getHeight()>limit).forEach(SpaceMarine::describe);
+        App.collection.stream().filter(w->w.getHeight()>limit).forEach(System.out::println);
         return true;
     }
 }

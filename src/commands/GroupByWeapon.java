@@ -1,8 +1,8 @@
-package Commands;
+package commands;
 
-import Main.App;
-import Main.Command;
-import Submarines.Weapon;
+import main.App;
+import main.Command;
+import submarines.Weapon;
 import utilites.interfaces.methods;
 
 public class GroupByWeapon extends Command implements methods{

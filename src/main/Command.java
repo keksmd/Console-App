@@ -1,6 +1,6 @@
-package Main;
+package main;
 
-import Commands.*;
+import commands.*;
 import utilites.interfaces.methods;
 
 import static utilites.CheckingReader.checkyRead;
@@ -47,7 +47,7 @@ public class Command implements methods {
                     cm.cmd = new PrintFieldDescendingLoyal();
                     break;
                 case "show":
-                    //SHOW
+                   cm.cmd = new Show();
                     break;
                 case "info":
                     cm.cmd = new Info();

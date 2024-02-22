@@ -1,6 +1,6 @@
-package Main;
+package main;
 
-import Submarines.SpaceMarine;
+import submarines.SpaceMarine;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ public class App {
     public static final String dateFileName = "Date.txt";
     public static boolean flag = true;
     public static final PriorityQueue<SpaceMarine> collection =new PriorityQueue<>();
-    public static File dateFile = new File(dateFileName);
+    public static final File dateFile = new File(dateFileName);
     public static void main(String[] args) {
         try {
             File dataFile = new File(dateFileName);
@@ -30,26 +30,28 @@ public class App {
                 new File(fileName).createNewFile();
             }
 
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
-        try {
             if (new File(fileName).exists()) {
                 if (new File(fileName).length() > 0) {
-                    readAndUpdate(fileName, collection);
-                    System.out.println("hel");
+                    collection.addAll(readAndUpdate(fileName));
+
                 }
             } else {
                 new File(fileName).createNewFile();
             }
-            while (flag) {
-                //Scanner sc = new Scanner(System.in);
-                //if(sc.hasNextLine()) {
-                //    new Command().commandReader(sc.nextLine()).getCmd().calling();
-                //}
-                new Command().commandReader(new Scanner(System.in).nextLine()).getCmd().calling();
-            }
+            Scanner sc = new Scanner(System.in);
+
+                while (flag) {
+                    while (sc.hasNext()&&flag) {
+                        try {
+                            new Command().commandReader(sc.nextLine()).getCmd().calling();
+                        }catch (NoSuchElementException e){
+                            System.err.println("Не надо вводить ctrl+D !!!");
+                            System.exit(0);
+                        }
+                    }
+
+                }
+
         }catch (IOException e){
             e.printStackTrace();
         }

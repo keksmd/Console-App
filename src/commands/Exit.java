@@ -1,6 +1,6 @@
-package Commands;
+package commands;
 
-import Main.*;
+import main.*;
 import utilites.interfaces.*;
 
 public class Exit extends Command implements methods{

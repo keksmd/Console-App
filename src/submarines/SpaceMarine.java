@@ -1,17 +1,26 @@
-package Submarines;
+package submarines;
 
-import Main.App;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import main.App;
 
-import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static java.time.LocalDateTime.now;
 import static utilites.CheckingReader.checkyRead;
 
-public class SpaceMarine implements Comparable<SpaceMarine> {
+public class SpaceMarine implements Comparable<SpaceMarine>  {
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
+    //@JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
     private java.time.LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private long health; //Значение поля должно быть больше 0
     private Boolean loyal; //Поле может быть null
@@ -20,6 +29,7 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
     private Chapter chapter; //Поле не может быть null
 
     public SpaceMarine(String n, Coordinates c, long h, Boolean l, float height, Weapon gun, Chapter ch) {
+        super();
         this.name = n;
         this.health = h;
         this.coordinates = c;
@@ -32,9 +42,13 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
 
         App.lastUpdated = LocalDate.now();
 
+
     }
 
-    public SpaceMarine(){}
+    public SpaceMarine(){
+
+    }
+
     public float getHeight(){
         return this.height;
     }
@@ -65,6 +79,22 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         return this;
     }
 
+    public long getHealth() {
+        return health;
+    }
+
+    public Chapter getChapter() {
+        return chapter;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
     public Boolean getLoyal() {
         return this.loyal;
     }
@@ -78,11 +108,23 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
 
     }
 
-    public void describe() {
-        for (Field f : SpaceMarine.class.getDeclaredFields()) {
-            System.out.println();
-            System.out.printf("%s : %s%n", f.getName(), String.valueOf(f.getGenericType()));
-        }
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("***** SpaceMarine Details *****\n");
+        sb.append("ID="+getId()+"\n");
+        sb.append("Name="+getName()+"\n");
+        sb.append("health="+getHealth()+"\n");
+        sb.append("Coordinates="+getCoordinates()+"\n");
+        sb.append("loyal="+getLoyal()+"\n");
+        sb.append("chapter="+getChapter()+"\n");
+        sb.append("weapoonType="+getWeaponType()+"\n");
+        sb.append("height="+getHeight()+"\n");
+        sb.append("creationDate="+getCreationDate()+"\n");
+
+        sb.append("*****************************");
+
+        return sb.toString();
     }
 
     public String getName() {
@@ -94,4 +136,40 @@ public class SpaceMarine implements Comparable<SpaceMarine> {
         return this.name.compareTo(other.name);
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setChapter(Chapter chapter) {
+        this.chapter = chapter;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setWeaponType(Weapon weaponType) {
+        this.weaponType = weaponType;
+    }
+
+
+    public void setLoyal(Boolean loyal) {
+        this.loyal = loyal;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public void setHealth(long health) {
+        this.health = health;
+    }
 }

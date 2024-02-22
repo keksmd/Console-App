@@ -1,1 +1,1 @@
-{"id":0,"name":"pidor","loyal":true,"height":4.4,"weaponType":"GRENADE_LAUNCHER"}
+{"id":0,"name":"pidor","coordinates":{"x":5,"y":6.6},"creationDate":"22-02-2024 07:24","health":4,"loyal":true,"height":5.5,"weaponType":"BOLT_PISTOL","chapter":{"name":"55","parentLegion":"","world":"ew"}}

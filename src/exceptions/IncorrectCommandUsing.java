@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 public class IncorrectCommandUsing extends RuntimeException{
     public IncorrectCommandUsing(){

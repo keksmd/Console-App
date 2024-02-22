@@ -1,4 +1,4 @@
-package Submarines;
+package submarines;
 
 public enum Weapon {
     BOLT_PISTOL,

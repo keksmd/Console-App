@@ -1,15 +1,15 @@
 package utilites;
 
-import Main.App;
-import Submarines.SpaceMarine;
+import main.App;
+import submarines.SpaceMarine;
+
+import java.util.HashMap;
 
 public class GetById {
+    static HashMap<Integer,SpaceMarine> map = new HashMap<>();
 
     public static SpaceMarine getById(int id){
-        SpaceMarine spm  = null;
-        if(App.collection.stream().anyMatch(w->w.getId() == id)){
-            spm = App.collection.stream().filter(w->w.getId()==id).findFirst().get();
-        }
-        return spm;
+        App.collection.forEach(w->map.put(w.getId(),w));
+        return map.get(id);
     }
 }

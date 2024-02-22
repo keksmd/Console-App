@@ -1,6 +1,6 @@
 package utilites;
 
-import Exceptions.IncorrectCommandUsing;
+import exceptions.IncorrectCommandUsing;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -60,7 +60,7 @@ public class CheckingReader {
                 case "s" -> (String) append.get();
                 default -> o;
             };
-            if (!uslovie.equals("")){
+            if (!uslovie.isEmpty()){
                 if (proove(type, uslovie, o)) {
                     return o;
                 } else {

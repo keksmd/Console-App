@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 public class IncorrectDataInput extends Error{
     public IncorrectDataInput(){
