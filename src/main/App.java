@@ -1,8 +1,10 @@
 package main;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import submarines.SpaceMarine;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -32,8 +34,7 @@ public class App {
 
             if (new File(fileName).exists()) {
                 if (new File(fileName).length() > 0) {
-                    collection.addAll(readAndUpdate(fileName));
-
+                    collection.addAll(readAndUpdate(fileName, new TypeReference<SpaceMarine>() {}));
                 }
             } else {
                 new File(fileName).createNewFile();

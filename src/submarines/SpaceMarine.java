@@ -53,7 +53,7 @@ public class SpaceMarine implements Comparable<SpaceMarine>  {
         return this.height;
     }
 
-    public SpaceMarine update() {
+    public void update() {
         App.lastUpdated = LocalDate.now();
 
         this.name = (String) checkyRead("s", "more length 0", "Введите имя");
@@ -76,7 +76,6 @@ public class SpaceMarine implements Comparable<SpaceMarine>  {
         this.chapter = new Chapter(
                 (String) checkyRead("s", "Введите название главы"),
                 (String) checkyRead("s", "Введите название мира"));
-        return this;
     }
 
     public long getHealth() {
@@ -110,21 +109,18 @@ public class SpaceMarine implements Comparable<SpaceMarine>  {
 
     @Override
     public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("***** SpaceMarine Details *****\n");
-        sb.append("ID="+getId()+"\n");
-        sb.append("Name="+getName()+"\n");
-        sb.append("health="+getHealth()+"\n");
-        sb.append("Coordinates="+getCoordinates()+"\n");
-        sb.append("loyal="+getLoyal()+"\n");
-        sb.append("chapter="+getChapter()+"\n");
-        sb.append("weapoonType="+getWeaponType()+"\n");
-        sb.append("height="+getHeight()+"\n");
-        sb.append("creationDate="+getCreationDate()+"\n");
 
-        sb.append("*****************************");
-
-        return sb.toString();
+        return "***** SpaceMarine Details *****\n" +
+                "ID=" + getId() + "\n" +
+                "Name=" + getName() + "\n" +
+                "health=" + getHealth() + "\n" +
+                "Coordinates=" + getCoordinates() + "\n" +
+                "loyal=" + getLoyal() + "\n" +
+                "chapter=" + getChapter() + "\n" +
+                "weapoonType=" + getWeaponType() + "\n" +
+                "height=" + getHeight() + "\n" +
+                "creationDate=" + getCreationDate() + "\n" +
+                "*****************************";
     }
 
     public String getName() {
