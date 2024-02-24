@@ -3,12 +3,9 @@ package commands;
 import utilites.interfaces.*;
 import main.*;
 
-import java.time.LocalDate;
-
-public class Clear extends Command implements methods{
+public class Clear extends CollectionManager implements methods{
     public boolean calling(){
-        App.collection.clear();
-        App.lastUpdated = LocalDate.now();
+        CollectionManager.collection.clear();
         return true;
     }
 }

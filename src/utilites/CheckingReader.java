@@ -2,8 +2,8 @@ package utilites;
 
 import exceptions.IncorrectCommandUsing;
 
-import java.util.Objects;
-import java.util.Scanner;
+import java.rmi.NoSuchObjectException;
+import java.util.*;
 import java.util.function.Supplier;
 
 
@@ -11,47 +11,40 @@ import java.util.function.Supplier;
 public class CheckingReader {
 
 
-    public static Object checkyRead(String type,String uslovie,String comment,String input) {
+    public static Object checkyRead(String type,String predicate,String comment,String input) {
         if (!comment.isEmpty()) {
             System.out.println(comment);
         }
         Scanner sc;
         if (input.equals("sin")) {
-            sc = new Scanner(System.in);
+            sc = new Scanner(System.in).useLocale(Locale.ENGLISH);
         } else {
             sc = new Scanner(input);
         }
-        Supplier<?> append = null;
-        Supplier<Boolean> check = null;
+        Supplier<?> append;
+        //Supplier<Boolean> check;
         Object o = null;
-        check = switch (type.toLowerCase()) {
-            case "b" -> {
-                append = sc::nextBoolean;
-                yield sc::hasNextBoolean;
-            }
-            case "i" -> {
-                append = sc::nextInt;
-                yield sc::hasNextInt;
-            }
-            case "l" -> {
-                append = sc::nextLong;
-                yield sc::hasNextLong;
-            }
-            case "f" -> {
-                System.out.println("2");
-                append = sc::nextFloat;
-                yield sc::hasNextFloat;
-            }
-            case "s" -> {
-                append = sc::nextLine;
-                yield sc::hasNextLine;
-            }
-            default -> check;
+       // check = switch (type.toLowerCase()) {
+         //   case "b" -> sc::hasNextBoolean;
+          //  case "i" -> sc::hasNextInt;
+            //case "l" -> sc::hasNextLong;
+        //case "f" -> sc::hasNextFloat;
+        //case "s" -> sc::hasNextLine;
+        //default -> throw new IncorrectCommandUsing("Неверный тип данных");
+//
+  //      };
+        append = switch (type.toLowerCase()) {
+            case "b" -> sc::nextBoolean;
+            case "i" -> sc::nextInt;
+            case "l" -> sc::nextLong;
+            case "f" -> sc::nextFloat;
+            case "s" -> sc::nextLine;
+            default -> throw new IncorrectCommandUsing("Неверный тип данных");
+
         };
-        if (check == null) {
-            throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead");
-        }
-        if (check.get()) {
+        //System.err.println(check.get());
+        //if (check.get()) {
+        try {
             o = switch (type) {
                 case "b" -> (Boolean) append.get();
                 case "i" -> (Integer) append.get();
@@ -60,18 +53,25 @@ public class CheckingReader {
                 case "s" -> (String) append.get();
                 default -> o;
             };
-            if (!uslovie.isEmpty()){
-                if (proove(type, uslovie, o)) {
+            if (!predicate.isEmpty()) {
+                if (proove(type, predicate, o)) {
                     return o;
                 } else {
-
-                    return checkyRead(type, uslovie, ("Значение не подходит по условию,еще раз\n" + comment).replace("Значение не подходит по условию,еще раз\nЗначение не подходит по условию,еще раз\n", "Значение не подходит по условию    ,еще раз\n"), input);
+                    return checkyRead(type, predicate, ("Значение не подходит по условию,еще раз\n" + comment).replace("Значение не подходит по условию,еще раз\nЗначение не подходит по условию,еще раз\n", "Значение не подходит по условию    ,еще раз\n"), input);
                 }
-            }else{
+            } else {
                 return o;
             }
-    }
-        return checkyRead(type,uslovie,("Вы ошиблись,еще раз\n"+comment).replace("Вы ошиблись,еще раз\nВы ошиблись,еще раз\n","Вы ошиблись,еще раз\n"),"sin");
+            //}
+        }catch(NoSuchElementException e){
+            if(input.equals("sin")){
+                return checkyRead(type,predicate,("Вы ошиблись,еще раз\n"+comment).replace("Вы ошиблись,еще раз\nВы ошиблись,еще раз\n","Вы ошиблись,еще раз\n"),"sin");
+            }else{
+                e.printStackTrace();
+                throw new IncorrectCommandUsing("missed datatype in checkingReader");
+            }
+        }
+        //return checkyRead(type,predicate,("Вы ошиблись,еще раз\n"+comment).replace("Вы ошиблись,еще раз\nВы ошиблись,еще раз\n","Вы ошиблись,еще раз\n"),"sin");
     }
     private static boolean proove(String type,String usl,Object o){
 
@@ -85,16 +85,18 @@ public class CheckingReader {
                     switch (words[0]) {
                         case "more":
                             if (words[1].equals("than") && (new Scanner(words[2]).hasNextInt() || new Scanner(words[2]).hasNextLong())) {
-                                if ((Long) o <= new Scanner(words[2]).nextLong()) {
-                                    right = false;}
+                                if ((Long) o < new Scanner(words[2]).nextLong()) {
+                                    right = false;
+                                }
                             } else {
                                 throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead1");
                             }
                             break;
                         case "less":
                             if (words[1].equals("than") && (new Scanner(words[2]).hasNextInt() || new Scanner(words[2]).hasNextLong())) {
-                                if ((Long) o >= new Scanner(words[2]).nextLong()) {
-                                    right = false;}
+                                if ((Long) o > new Scanner(words[2]).nextLong()) {
+                                    right = false;
+                                }
                             } else {
                                 throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead2");
                             }
@@ -109,7 +111,7 @@ public class CheckingReader {
                     switch (words[0]) {
                         case "more":
                             if (words[1].equals("than") && (new Scanner(words[2]).hasNextFloat())) {
-                                if ((Float) o <= new Scanner(words[2]).nextFloat()) {
+                                if ((Float) o < new Scanner(words[2]).nextFloat()) {
                                     right = false;}
                             } else {
                                 throw new IncorrectCommandUsing("Syntax error in proove \n in checkyRead4");

@@ -1,13 +1,15 @@
 package commands;
 
-import main.App;
-import main.Command;
-import submarines.SpaceMarine;
+import main.CollectionManager;
 import utilites.interfaces.methods;
 
-public class Show extends Command implements methods{
+public class Show extends CollectionManager implements methods{
     public boolean calling(){
-        App.collection.forEach(System.out::println);
+        if(CollectionManager.collection.isEmpty()){
+            System.out.println("В коллекции нет элементов");
+        }
+        CollectionManager.collection.forEach(
+                w -> System.out.println(w+"\n"));
         return true;
     }
 }

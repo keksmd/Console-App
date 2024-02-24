@@ -1,24 +1,25 @@
 package commands;
 
-import main.App;
-import main.Command;
-import submarines.SpaceMarine;
+import main.CollectionManager;
+import spacemarines.SpaceMarine;
 import utilites.interfaces.methods;
 
-import java.time.LocalDate;
+import java.util.List;
 
-public class UpdateById extends Command implements methods{
+public class UpdateById extends CollectionManager implements methods{
     final String idToUpdate;
-    public UpdateById(String id){
-        this.idToUpdate = id;
+    String[] inputs;
+    public UpdateById(String[] inputs){
+        this.idToUpdate = inputs[0];
+        this.inputs = inputs;
     }
     public boolean calling(){
         boolean flag = false;
-        for(SpaceMarine c: App.collection){
+        for(SpaceMarine c: CollectionManager.collection){
             if(c.getId() == Integer.parseInt(idToUpdate)){
-                c.update();
+                String[] args = {inputs[1],inputs[2],inputs[3],inputs[4],};
+                c.update(args);
                 flag = true;
-                App.lastUpdated = LocalDate.now();
             }
         }
 

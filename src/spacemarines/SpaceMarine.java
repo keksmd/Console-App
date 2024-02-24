@@ -1,14 +1,17 @@
-package submarines;
+package spacemarines;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import main.App;
+import main.CollectionManager;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.time.LocalDateTime.now;
 import static utilites.CheckingReader.checkyRead;
@@ -37,10 +40,9 @@ public class SpaceMarine implements Comparable<SpaceMarine>  {
         this.weaponType = gun;
         this.chapter = ch;
         this.height = height;
-        this.id = App.collection.size();
+        this.id = CollectionManager.collection.size();
         this.creationDate = now();
 
-        App.lastUpdated = LocalDate.now();
 
 
     }
@@ -53,29 +55,29 @@ public class SpaceMarine implements Comparable<SpaceMarine>  {
         return this.height;
     }
 
-    public void update() {
-        App.lastUpdated = LocalDate.now();
+    public void update(String[] input) {
+        ArrayList<String> args = (ArrayList<String>) Arrays.stream(input).collect(Collectors.toList());
 
-        this.name = (String) checkyRead("s", "more length 0", "Введите имя");
 
+        this.name = args.get(0);
         this.coordinates = new Coordinates(
-                (Long) checkyRead("l", "less than 626", "Введите целочисленную x-координату(x<=625"),
-                (Float) checkyRead("f", "more than -353.0", "Введите y-координату в формате деcятичной дроби(y>=-354.0"));
+                (Long) checkyRead("l", "less than 626", "Введите целочисленную x-координату(x<=625","Sin"),
+                (Float) checkyRead("f", "more than -353.0", "Введите y-координату в формате деcятичной дроби(y>=-354.0","sin"));
 
-        this.health = (Long) checkyRead("l", "Введите health");
-        this.loyal = (Boolean) checkyRead("b", "Введите loyal (true/false)");
-        this.height = (Float) checkyRead("f", "Введите height");
+        this.health = (Long) checkyRead("l","more than 0","",args.get(1));
+        this.loyal =(Boolean) checkyRead("b",args.get(2));
+        this.height = (Float)checkyRead("f",args.get(3));
         this.weaponType = Weapon.choose(
-                (String) checkyRead("s", """
+                (String) checkyRead("s","is weapon", """
                         Введите одно из названия для оружия:
-                         BOLT_PISTOL,
+                            BOLT_PISTOL,
                             COMBI_PLASMA_GUN,
                             GRENADE_LAUNCHER,
                             INFERNO_PISTOL,
-                            MULTI_MELTA"""));
+                            MULTI_MELTA""","sin"));
         this.chapter = new Chapter(
-                (String) checkyRead("s", "Введите название главы"),
-                (String) checkyRead("s", "Введите название мира"));
+                (String) checkyRead("s","more length 0", "Введите название главы","sin"),
+                (String) checkyRead("s","more length 0", "Введите название мира","sin"));
     }
 
     public long getHealth() {

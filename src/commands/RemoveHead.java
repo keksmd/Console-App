@@ -1,12 +1,11 @@
 package commands;
 
-import main.App;
-import main.Command;
+import main.CollectionManager;
 import utilites.interfaces.methods;
 
-public class RemoveHead extends Command implements methods{
+public class RemoveHead extends CollectionManager implements methods{
     public boolean calling(){
-        App.collection.poll();
+        CollectionManager.collection.poll();
         return true;
     }
 }

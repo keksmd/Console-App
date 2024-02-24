@@ -1,4 +1,4 @@
-package submarines;
+package spacemarines;
 
 import static java.lang.String.valueOf;
 
