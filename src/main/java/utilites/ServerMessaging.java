@@ -1,6 +1,8 @@
 package utilites;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import exceptions.LOLDIDNTREAD;
+import exceptions.Discntcd;
 import main.Response;
 
 import java.io.ByteArrayOutputStream;
@@ -8,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 
 
@@ -18,6 +22,26 @@ public class ServerMessaging {
         resp.getMessages().add(message);
         os.write(ObjectConverter.toJson(resp).getBytes());
         os.write(-1);
+    }
+    public static Response nioRead(SocketChannel clientChannel) throws IOException, LOLDIDNTREAD, Discntcd {
+        ByteBuffer buf = ByteBuffer.allocate(1024);
+        int readed = clientChannel.read(buf);
+        if(readed>0){
+            return ObjectConverter.deserialize(new String(buf.flip().array(), 0, readed), new TypeReference<Response>() {});
+        } else if (readed==-1) {
+            throw new Discntcd();
+        } else  throw new LOLDIDNTREAD();
+
+    }
+    public static void nioSend(SocketChannel clientChannel,String message) throws IOException {
+        Response resp = new Response();
+        resp.addMessage(message);
+        ByteBuffer buf = ByteBuffer.allocate(1024).put(ObjectConverter.toJson(resp).getBytes());
+        clientChannel.write(buf);
+    }
+    public static void nioSend(SocketChannel clientChannel,Response resp) throws IOException {
+        ByteBuffer buf = ByteBuffer.allocate(1024).put(ObjectConverter.toJson(resp).getBytes());
+        clientChannel.write(buf);
     }
     public static void send(Socket socket,Response resp) throws IOException {
         OutputStream os = socket.getOutputStream();

@@ -1,9 +1,13 @@
 package main;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class Response {
+
     private boolean success;
     private boolean flag = true;
 
