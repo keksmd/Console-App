@@ -15,8 +15,10 @@ import java.util.stream.Collectors;
 import static utilites.CheckingReader.checkyRead;
 
 public class Add extends Command implements methods{
-    public Add(){
+    public Add(String[] a){
+        args =  a;
     }
+    String[] args;
 
     SpaceMarine spm;
     public Response calling(){
@@ -25,32 +27,22 @@ public class Add extends Command implements methods{
 
         CollectionManager.collection.add(
                 new SpaceMarine(
-                        (String) checkyRead("s","more length 0","Введите имя","sin"),
+                        (String) checkyRead("s",args[0]),
                         new Coordinates(
-                                (Long)checkyRead("l","less than 626","Введите целочисленную x-координату (x<=625)","sin") ,
-                                (Float)checkyRead("f","more than -353.0","Введите y-координату в формате деcятичной дроби (y>=-354.0)","sin")),
-                        (Long)checkyRead("l","more than 0","Введите здоровье","sin"),
-                        (Boolean) checkyRead("b","Введите булевое значение true/false преданности","sin"),
-                        (Float)checkyRead("f","Введите десятичное число,характеризующее длинну","sin"),
+                                (Long)checkyRead("l",args[1]) ,
+                                (Float)checkyRead("f",args[2])),
+                        (Long)checkyRead("l",args[3]),
+                        (Boolean) checkyRead("b",args[4]),
+                        (Float)checkyRead("f",args[5]),
                         Weapon.choose(
-                        (String)checkyRead("s","is weapon","""
-                                Введите одно из названия для оружия:
-                                    BOLT_PISTOL,
-                                    COMBI_PLASMA_GUN,
-                                    GRENADE_LAUNCHER,
-                                    INFERNO_PISTOL,
-                                    MULTI_MELTA""","sin")),
+                        (String)checkyRead("s",args[6])),
                 new Chapter(
-                        (String)checkyRead("s","more length 0","Введите название главы","sin"),
-                        (String)checkyRead("s","more length 0","Введите название мира","sin"))));
-            CollectionManager.collection.stream().sorted().collect(Collectors.toCollection(PriorityQueue::new));
-
+                        (String)checkyRead("s",args[7]),
+                        (String)checkyRead("s",args[8]))));
+            CollectionManager.collection = CollectionManager.collection.stream().sorted().collect(Collectors.toCollection(PriorityQueue::new));
 
         return resp ;
 
     }
-    public boolean calling(SpaceMarine spm){
-        CollectionManager.collection.add(spm);
-        return true;
-    }
+
 }

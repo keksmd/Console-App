@@ -20,7 +20,7 @@ public class CollectionManager<C extends Collection<T>, T>  {
 
      */
 
-    public static final PriorityQueue<SpaceMarine> collection =new PriorityQueue<>();
+    public static PriorityQueue<SpaceMarine> collection =new PriorityQueue<>();
     private static final HashSet<String> wasExecuted = new HashSet<>();
     public static Date lastUpdated;
 

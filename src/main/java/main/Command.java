@@ -44,16 +44,6 @@ public class Command implements methods {
                 case "clear":
                     cm.cmd = new Clear();
                     break;
-                case "add":
-                    cm.cmd = new Add();
-                    break;
-                case "add_if_max":
-                    cm.cmd = new AddIfMax();
-                    break;
-                case "add_if_min":
-                    cm.cmd = new AddIfMin();
-                    break;
-
                 case "exit":
                     cm.cmd = new Exit();
                     break;
@@ -95,7 +85,23 @@ public class Command implements methods {
                     cm.cmd = new NotFound();
             }
         }else{
-             cm.cmd = new NotFound();
+           if(words[0].startsWith("add")){
+               String[] args1 = new String[words.length-1];
+               for(int i =0;i<args1.length;i++){
+                   args1[i] = words[i];
+               }
+               switch (words[0]){
+                   case "add":
+                       cm.cmd = new Add(args1);
+                       break;
+                   case "add_if_max":
+                       cm.cmd = new AddIfMax(args1);
+                       break;
+                   case "add_if_min":
+                       cm.cmd = new AddIfMin(args1);
+                       break;
+               }
+           }else cm.cmd = new NotFound();
         }
 
         return cm.cmd;
