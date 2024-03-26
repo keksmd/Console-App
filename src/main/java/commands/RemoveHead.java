@@ -11,4 +11,8 @@ public class RemoveHead extends Command implements methods{
         CollectionManager.collection.poll();
         return resp;
     }
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

@@ -1,23 +1,14 @@
 package main;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
-public class Response extends Message{
-    private boolean success;
-    public boolean isSuccess() {
-        return success;
-    }
-
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
+public abstract class Message {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("***** "+this.getClass()+" Details *****\n");
-        for(Field f: this.getClass().getFields()){
+        for(Field f:this.getClass().getFields()){
             try {
                 f.setAccessible(true);
                 s.append(f.getName()).append("=").append(f.get(this).toString()).append("\n");
@@ -29,13 +20,20 @@ public class Response extends Message{
 
         return s.toString();
     }
-    private boolean flag = true;
 
-    public boolean isFlag() {
-        return flag;
+    ArrayList<String> messages = new ArrayList<>();
+    public void setMessages(ArrayList<String> messages) {
+        this.messages = messages;
     }
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public Message() {
     }
+
+    public ArrayList<String> getMessages() {
+        return messages;
+    }
+    public void addMessage(String msg1){
+        this.messages.add(msg1);
+    }
+
 }

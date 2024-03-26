@@ -14,4 +14,8 @@ public class PrintFieldDescendingLoyal extends Command implements methods{
             return resp;
 
     }
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

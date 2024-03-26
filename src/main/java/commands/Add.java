@@ -15,12 +15,14 @@ import java.util.stream.Collectors;
 import static utilites.CheckingReader.checkyRead;
 
 public class Add extends Command implements methods{
-    public Add(String[] a){
-        args =  a;
-    }
-    String[] args;
+    public Add(){
 
-    SpaceMarine spm;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
     public Response calling(){
         Response resp = super.calling();
 

@@ -6,13 +6,13 @@ import main.Response;
 import utilites.interfaces.methods;
 
 public class FilterHeight extends Command implements methods{
-    final int limit;
-    public FilterHeight(int l){
-        this.limit = l;
+    @Override
+    public String toString() {
+        return super.toString();
     }
     public Response calling(){
         Response resp = super.calling();
-        CollectionManager.collection.stream().filter(w->w.getHeight()>limit).forEach(System.out::println);
+        CollectionManager.collection.stream().filter(w->w.getHeight()>Integer.parseInt(args[0])).forEach(System.out::println);
         return resp;
     }
 }

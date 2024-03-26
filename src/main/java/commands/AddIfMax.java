@@ -14,11 +14,10 @@ import java.util.Comparator;
 import static utilites.CheckingReader.checkyRead;
 
 public class AddIfMax extends Command implements methods{
-    public AddIfMax(String[] a){
-        args =a;
-
+    @Override
+    public String toString() {
+        return super.toString();
     }
-    String[] args;
     public Response calling() {
         Response resp = super.calling();
         SpaceMarine spm = (
@@ -35,8 +34,11 @@ public class AddIfMax extends Command implements methods{
                         new Chapter(
                                 (String)checkyRead("s",args[7]),
                                 (String)checkyRead("s",args[8]))));
-        if(spm.compareTo(CollectionManager.collection.stream().max(Comparator.naturalOrder()).get())>0)
-            new Add(args).calling();
+        if(spm.compareTo(CollectionManager.collection.stream().max(Comparator.naturalOrder()).get())>0) {
+            Add add = new Add();
+            add.setArgs(args);
+            add.calling();
+        }
         else{
             resp.setSuccess(false);
         }

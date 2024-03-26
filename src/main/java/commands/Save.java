@@ -24,4 +24,8 @@ public class Save extends Command implements methods{
 
         return resp;
     }
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

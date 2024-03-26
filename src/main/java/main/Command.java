@@ -7,6 +7,8 @@ package main;
 import commands.*;
 import utilites.interfaces.methods;
 
+import java.lang.reflect.Field;
+
 public class Command implements methods {
     /**
      * общий для всех классов-комманд,являющихся наследниками {@link Command}
@@ -23,88 +25,96 @@ public class Command implements methods {
     /**
      * Переменная,где хранится ссылка на наследника {@link Command},который и реализует нужную команду
      */
-    Command cmd;
-    public Command getCmd() {
-        return cmd;
+
+    public String[] args;
+
+    public String[] getArgs() {
+        return args;
+    }
+
+    public void setArgs(String[] args) {
+        this.args = args;
+    }
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("***** "+this.getClass()+" Details *****\n");
+        for(Field f:this.getClass().getFields()){
+            try {
+                f.setAccessible(true);
+                s.append(f.getName()).append("=").append(f.get(this).toString()).append("\n");
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        s.append("*****************************");
+
+        return s.toString();
+    }
+    private String name ;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
-     * Метод, определяющий команду по вводу str и инициализирующий поле {@link Command#cmd}
+     * Метод, определяющий команду по вводу str
      * @param str - текстовое значение команды
      * @return объект,поле cmd,которого имеет реализацию команды переданной в {@link Command#commandReader(String)}
      */
     public Command commandReader(String str){
-        Command cm = new Command();
+        Command cmd ;
         String[] words = str.split(" ");
        if(words.length ==1){
-            switch (str){
-                case "help":
-                    cm.cmd = new Help();
-                    break;
-                case "clear":
-                    cm.cmd = new Clear();
-                    break;
-                case "exit":
-                    cm.cmd = new Exit();
-                    break;
-                case "remove_head":
-                    cm.cmd = new RemoveHead();
-                    break;
-                case "group_counting_by_weapon_type":
-                    cm.cmd = new GroupByWeapon();
-                    break;
-                case "print_field_descending_loyal":
-                    cm.cmd = new PrintFieldDescendingLoyal();
-                    break;
-                case "show":
-                   cm.cmd = new Show();
-                    break;
-                case "info":
-                    cm.cmd = new Info();
-                    break;
-
-                default:
-                    cm.cmd = new NotFound();
-            }
+           cmd = switch (str) {
+               case "add" -> new Add();
+               case "add_if_max" -> new AddIfMax();
+               case "add_if_min" -> new AddIfMin();
+               case "help" -> new Help();
+               case "clear" -> new Clear();
+               case "exit" -> new Exit();
+               case "remove_head" -> new RemoveHead();
+               case "group_counting_by_weapon_type" -> new GroupByWeapon();
+               case "print_field_descending_loyal" -> new PrintFieldDescendingLoyal();
+               case "show" -> new Show();
+               case "info" -> new Info();
+               default -> new NotFound();
+           };
         } else if (words.length == 2) {
             switch (words[0]){
                 case "update_by_id":
-                    cm.cmd = new UpdateById(words[1]);
+                    UpdateById upd = new UpdateById();
+                    upd.setArgs(new String[] {words[1]});
+                    cmd = upd;
                     break;
+                /*case "execute_script":
+                    cmd = new Execute(words[1]);
+                    break;*/
 
-                case "execute_script":
-                    cm.cmd = new Execute(words[1]);
-                    break;
                 case "remove_by_id":
-                   cm.cmd = new RemoveById(words[1]);
+                    RemoveById rmd = new RemoveById();
+                    rmd.setArgs(new String[] {words[1]});
+                    cmd = rmd;
+
                     break;
                 case "filter_greater_than_height":
-                    cm.cmd = new FilterHeight(Integer.parseInt(words[1]));
+                    FilterHeight fh = new FilterHeight();
+                    fh.setArgs(new String[]{words[1]});
+                    cmd = fh;
                     break;
                 default:
-                    cm.cmd = new NotFound();
+                    cmd = new NotFound();
             }
         }else{
-           if(words[0].startsWith("add")){
-               String[] args1 = new String[words.length-1];
-               for(int i =0;i<args1.length;i++){
-                   args1[i] = words[i];
-               }
-               switch (words[0]){
-                   case "add":
-                       cm.cmd = new Add(args1);
-                       break;
-                   case "add_if_max":
-                       cm.cmd = new AddIfMax(args1);
-                       break;
-                   case "add_if_min":
-                       cm.cmd = new AddIfMin(args1);
-                       break;
-               }
-           }else cm.cmd = new NotFound();
+
+           cmd = new NotFound();
         }
 
-        return cm.cmd;
+        return cmd;
 
     }
 }

@@ -15,4 +15,8 @@ public class Show extends Command implements methods{
                 w -> resp.addMessage(w+"\n"));
         return resp;
     }
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

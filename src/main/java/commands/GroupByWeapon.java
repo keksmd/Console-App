@@ -13,6 +13,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GroupByWeapon extends Command implements methods{
+    @Override
+    public String toString() {
+        return super.toString();
+    }
     public Response calling() {
         Response resp = super.calling();
         StringBuilder s = new StringBuilder();

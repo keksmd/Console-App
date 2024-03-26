@@ -9,4 +9,8 @@ public class Clear extends Command implements methods{
         CollectionManager.collection.clear();
         return resp;
     }
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

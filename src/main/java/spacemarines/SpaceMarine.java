@@ -99,27 +99,21 @@ public class SpaceMarine implements Comparable<SpaceMarine>  {
         return this.height;
     }
 
-    public void update() {
+    public void update(String[] args) {
 
-        this.name = (String) checkyRead("s","more length 0","Введите имя","sin");
+        this.name = (String) checkyRead("s",args[0]);
         this.coordinates = new Coordinates(
-                (Long) checkyRead("l", "less than 626", "Введите целочисленную x-координату(x<=625","Sin"),
-                (Float) checkyRead("f", "more than -353.0", "Введите y-координату в формате деcятичной дроби(y>=-354.0","sin"));
+                (Long) checkyRead("l", args[1]),
+                (Float) checkyRead("f", args[2]));
 
-        this.health = (Long)checkyRead("l","more than 0","Введите здоровье","sin");
-        this.loyal =(Boolean) checkyRead("b","Введите булевое значение true/false преданности","sin");
-        this.height = (Float)checkyRead("f","Введите десятичное число,характеризующее длинну","sin");
+        this.health = (Long)checkyRead("l",args[3]);
+        this.loyal =(Boolean) checkyRead("b",args[4]);
+        this.height = (Float)checkyRead("f",args[5]);
         this.weaponType = Weapon.choose(
-                (String) checkyRead("s","is weapon", """
-                        Введите одно из названия для оружия:
-                            BOLT_PISTOL,
-                            COMBI_PLASMA_GUN,
-                            GRENADE_LAUNCHER,
-                            INFERNO_PISTOL,
-                            MULTI_MELTA""","sin"));
+                (String) checkyRead("s",args[6]));
         this.chapter = new Chapter(
-                (String) checkyRead("s","more length 0", "Введите название главы","sin"),
-                (String) checkyRead("s","more length 0", "Введите название мира","sin"));
+                (String) checkyRead("s",args[7]),
+                (String) checkyRead("s",args[8]));
     }
 
     public long getHealth() {
@@ -154,7 +148,7 @@ public class SpaceMarine implements Comparable<SpaceMarine>  {
     @Override
     public String toString(){
 
-        return "***** SpaceMarine Details *****\n" +
+        return "***** "+this.getClass()+" Details *****\n" +
                 "ID=" + getId() + "\n" +
                 "Name=" + getName() + "\n" +
                 "health=" + getHealth() + "\n" +

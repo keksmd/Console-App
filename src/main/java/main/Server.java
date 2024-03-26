@@ -56,7 +56,7 @@ public class Server {
                 log.info("взяли ключ");
                 SelectionKey key = keysIterator.next();
 
-                Response resp ;
+                Request request ;
                 if(key.isAcceptable()){
                     log.info("ключ оказался доступным");
                     this.setClientChannel(this.getServerSocketChannel().accept());
@@ -70,28 +70,30 @@ public class Server {
                 if(key.isReadable()){
                     log.info("ключ оказался читаемым");
                     try{
-                        resp= nioRead(this.getClientChannel());
+                        request= nioRead(this.getClientChannel());
                     }catch (IOException | LOLDIDNTREAD | Discntcd e){
-                        resp = null;
+                        request = null;
                         if(e instanceof LOLDIDNTREAD){
                             this.getClientChannel().close();
                         }
                         log.error("непрочитали(",e);
-                    }
 
-                    if(resp!=null){
-                        log.info("прочитали {}",resp.getMessages());
-                        serverMessage = resp.getMessages().get(0);
+                    }
+                    if(request!=null){
+                        log.info("прочитали {}",request.getMessages());
+                        serverMessage = request.getMessages().get(0);
                     }else{
                         log.info("null" );
+                    }
+                    if(!serverMessage.isEmpty()){
+                        log.info(serverMessage);
+                        request.getCommandToExecute().calling();
+                        nioSend(this.getClientChannel(),new Command().commandReader(serverMessage).calling());
                     }
 
                 }
                 log.info("key - if закончился");
-                if(!serverMessage.isEmpty()){
-                    log.info(serverMessage);
-                    nioSend(this.getClientChannel(),new Command().commandReader(serverMessage).calling());
-                }
+
                 keysIterator.remove();
 
             }

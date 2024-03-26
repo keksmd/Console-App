@@ -5,6 +5,10 @@ import main.Response;
 import utilites.interfaces.methods;
 
 public class NotFound extends Command implements methods{
+    @Override
+    public String toString() {
+        return super.toString();
+    }
     public Response calling(){
         Response resp = super.calling();
         resp.addMessage("Unknown command,try again or use 'help' toget information about aviable commands");
