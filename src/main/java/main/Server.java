@@ -13,6 +13,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
 import static main.App.log;
+import static org.apache.logging.log4j.util.Strings.isBlank;
 import static utilites.ServerMessaging.nioRead;
 import static utilites.ServerMessaging.nioSend;
 
@@ -46,7 +47,7 @@ public class Server {
     }
     public void  run() throws IOException {
         while (true) {//true
-            log.info("Вошли в бесконечный цикл");
+            log.info("Новый шаг бесконечного цикла по селектору");
             CollectionManager.getWasExecuted().clear();
 
             this.getSelector().select();
@@ -66,7 +67,6 @@ public class Server {
                     log.info("Зарегали на селектор с read");
 
                 }
-                String serverMessage = "";
                 if(key.isReadable()){
                     log.info("ключ оказался читаемым");
                     try{
@@ -80,24 +80,22 @@ public class Server {
 
                     }
                     if(request!=null){
+                        if(!request.getMessages().get(0).isBlank()){
+                            log.info(request.getMessages().get(0));
+                            nioSend(this.getClientChannel(),request.getCommandToExecute().calling());
+                        }
                         log.info("прочитали {}",request.getMessages());
-                        serverMessage = request.getMessages().get(0);
                     }else{
                         log.info("null" );
                     }
-                    if(!serverMessage.isEmpty()){
-                        log.info(serverMessage);
-                        request.getCommandToExecute().calling();
-                        nioSend(this.getClientChannel(),new Command().commandReader(serverMessage).calling());
-                    }
+
+
 
                 }
-                log.info("key - if закончился");
 
                 keysIterator.remove();
 
             }
-            log.info("итератор закончился");
         }
     }
 

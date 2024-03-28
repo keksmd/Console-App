@@ -21,7 +21,7 @@ public class ServerMessaging {
                 if (readed != -1) {
                     buf.flip();
                     String msg = new String(ByteBuffer.allocate(readed).put(buf.array(),0,readed).array());
-                    log.info("readed {}",msg);
+                    log.info("readed {} , after seserialization {}",msg,ObjectConverter.toJson(ObjectConverter.deserialize(msg, new TypeReference<>() {})));
                     return ObjectConverter.deserialize(msg, new TypeReference<>() {});
                 } else throw new LOLDIDNTREAD();
     }

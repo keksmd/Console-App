@@ -7,7 +7,9 @@ package main;
 import commands.*;
 import utilites.interfaces.methods;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class Command implements methods {
     /**
@@ -18,6 +20,8 @@ public class Command implements methods {
      */
     public Response calling(){
         Response resp = new Response();
+        resp.
+        resp.
         resp.setSuccess(true);
         return resp;
     }
@@ -70,7 +74,7 @@ public class Command implements methods {
         Command cmd ;
         String[] words = str.split(" ");
        if(words.length ==1){
-           cmd = switch (str) {
+           cmd = switch (str.toLowerCase()) {
                case "add" -> new Add();
                case "add_if_max" -> new AddIfMax();
                case "add_if_min" -> new AddIfMin();
@@ -85,7 +89,7 @@ public class Command implements methods {
                default -> new NotFound();
            };
         } else if (words.length == 2) {
-            switch (words[0]){
+            switch (words[0].toLowerCase()){
                 case "update_by_id":
                     UpdateById upd = new UpdateById();
                     upd.setArgs(new String[] {words[1]});
