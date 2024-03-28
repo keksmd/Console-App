@@ -23,8 +23,11 @@ public class Add extends Command implements methods{
     public String toString() {
         return super.toString();
     }
-    public Response calling(){
-        Response resp = super.calling();
+    public Command castInto(Command name){
+        return (Add)name;
+    }
+    public Response calling(String[] a){
+        Response resp = super.calling(a);
 
 
         CollectionManager.collection.add(

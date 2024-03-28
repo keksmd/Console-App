@@ -9,11 +9,14 @@ public class Exit extends Command implements methods{
         return super.toString();
     }
 
-    public Response calling(){
-        Response resp = super.calling();
+    public Response calling(String[] a){
+        Response resp = super.calling(a);
         resp.setFlag(false);
-        new Save().calling();
+        new Save().calling(a);
         return resp;
 
+    }
+    public Command castInto(Command name){
+        return (Exit)name;
     }
 }

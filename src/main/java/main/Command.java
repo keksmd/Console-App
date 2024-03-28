@@ -18,12 +18,17 @@ public class Command implements methods {
      *
      * @return по умолчанию возвращает true, в реализациях boolean,показывающий,была ли выполнена команда успешно
      */
-    public Response calling(){
+    public Response calling(String[] a){
         Response resp = new Response();
-        resp.
-        resp.
+        this.args =a;
         resp.setSuccess(true);
         return resp;
+    }
+    public Command revalidate(String name){
+        return commandReader(name).castInto(this);
+    }
+    public Command castInto(Command name){
+        return (Command) name;
     }
 
     /**
@@ -56,6 +61,7 @@ public class Command implements methods {
         return s.toString();
     }
     private String name ;
+
 
     public String getName() {
         return name;

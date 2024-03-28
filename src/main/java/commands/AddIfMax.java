@@ -18,8 +18,11 @@ public class AddIfMax extends Command implements methods{
     public String toString() {
         return super.toString();
     }
-    public Response calling() {
-        Response resp = super.calling();
+    public Command castInto(Command name){
+        return (AddIfMax)name;
+    }
+    public Response calling(String[] a){
+        Response resp = super.calling(a);
         SpaceMarine spm = (
                 new SpaceMarine(
                         (String) checkyRead("s",args[0]),
@@ -35,9 +38,7 @@ public class AddIfMax extends Command implements methods{
                                 (String)checkyRead("s",args[7]),
                                 (String)checkyRead("s",args[8]))));
         if(spm.compareTo(CollectionManager.collection.stream().max(Comparator.naturalOrder()).get())>0) {
-            Add add = new Add();
-            add.setArgs(args);
-            add.calling();
+            new Add().calling(a);
         }
         else{
             resp.setSuccess(false);

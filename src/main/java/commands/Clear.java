@@ -4,8 +4,11 @@ import utilites.interfaces.*;
 import main.*;
 
 public class Clear extends Command implements methods{
-    public Response calling(){
-        Response resp = super.calling();
+    public Command castInto(Command name){
+        return (Clear)name;
+    }
+    public Response calling(String[] a){
+        Response resp = super.calling(a);
         CollectionManager.collection.clear();
         return resp;
     }
@@ -14,3 +17,4 @@ public class Clear extends Command implements methods{
         return super.toString();
     }
 }
+

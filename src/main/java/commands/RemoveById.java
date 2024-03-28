@@ -7,8 +7,8 @@ import utilites.interfaces.methods;
 
 public class RemoveById extends Command implements methods{
 
-    public Response calling(){
-        Response resp = super.calling();
+    public Response calling(String[] a){
+        Response resp = super.calling(a);
         if(CollectionManager.collection.stream().anyMatch(w->String.valueOf(w.getId()).equals(args[0]))) {
             CollectionManager.collection.removeIf(c -> c.getId() == Integer.parseInt(args[0]));
         }else{
@@ -16,6 +16,9 @@ public class RemoveById extends Command implements methods{
             resp.setSuccess(false);
         }
         return resp;
+    }
+    public Command castInto(Command name){
+        return (RemoveById)name;
     }
     @Override
     public String toString() {

@@ -17,11 +17,14 @@ public class GroupByWeapon extends Command implements methods{
     public String toString() {
         return super.toString();
     }
-    public Response calling() {
-        Response resp = super.calling();
+    public Response calling(String[] a){
+        Response resp = super.calling(a);
         StringBuilder s = new StringBuilder();
         Arrays.stream(Weapon.values()).forEach(gun -> s.append(String.format("%s : %d%n", gun.name(), CollectionManager.collection.stream().filter(w -> w.getWeaponType() == gun).count())));
         resp.addMessage(s.toString());
         return resp;
+    }
+    public Command castInto(Command name){
+        return (GroupByWeapon)name;
     }
 }

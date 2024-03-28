@@ -20,8 +20,8 @@ public class Execute extends Command implements methods{
         this.fileName = fileName;
 
     }
-    public Response calling(){
-        Response resp = super.calling();
+    public Response calling(String[] a){
+        Response resp = super.calling(a);
         File file = new File(fileName);
         if(file.exists()){
             boolean flag = false;
@@ -38,11 +38,11 @@ public class Execute extends Command implements methods{
                 while (fileContentScanner.hasNextLine()) {
                     var line = fileContentScanner.nextLine();
                     if (!line.equals("execute_script " + this.fileName)) {
-                        if (!new Command().commandReader(line).calling().isSuccess()) {
+                        /*if (!new Command().commandReader(line).calling().isSuccess()) {
                             new NotFound().calling();
                         } else {
                             flag = true;
-                        }
+                        }*/
                     } else {
                         System.err.println("Ах ты шалунишка,не стоит делать рекурсионный вызов комманд, рекурсия была проинорирована");
                     }
@@ -56,5 +56,8 @@ public class Execute extends Command implements methods{
             resp.setSuccess(false);
             return resp;
         }
+    }
+    public Command castInto(Command name){
+        return (Execute)name;
     }
 }

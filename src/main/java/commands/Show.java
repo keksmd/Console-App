@@ -6,14 +6,17 @@ import main.Response;
 import utilites.interfaces.methods;
 
 public class Show extends Command implements methods{
-    public Response calling(){
-        Response resp = super.calling();
+    public Response calling(String[] a){
+        Response resp = super.calling(a);
         if(CollectionManager.collection.isEmpty()){
             resp.addMessage("В коллекции нет элементов");
         }
         CollectionManager.collection.forEach(
                 w -> resp.addMessage(w+"\n"));
         return resp;
+    }
+    public Command castInto(Command name){
+        return (Show)name;
     }
     @Override
     public String toString() {

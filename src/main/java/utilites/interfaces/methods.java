@@ -4,5 +4,5 @@ import main.Response;
 import java.util.ArrayList;
 
 public interface methods {
-    Response calling();
+    Response calling(String[] args);
 }

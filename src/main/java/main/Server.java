@@ -11,6 +11,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 import static main.App.log;
 import static org.apache.logging.log4j.util.Strings.isBlank;
@@ -71,6 +72,7 @@ public class Server {
                     log.info("ключ оказался читаемым");
                     try{
                         request= nioRead(this.getClientChannel());
+
                     }catch (IOException | LOLDIDNTREAD | Discntcd e){
                         request = null;
                         if(e instanceof LOLDIDNTREAD){
@@ -80,9 +82,10 @@ public class Server {
 
                     }
                     if(request!=null){
+                        request.commandToExecute.revalidate(request.getMessages().get(0));
                         if(!request.getMessages().get(0).isBlank()){
                             log.info(request.getMessages().get(0));
-                            nioSend(this.getClientChannel(),request.getCommandToExecute().calling());
+                            nioSend(this.getClientChannel(),request.getCommandToExecute().calling(request.getMessages().toArray(String[]::new)));
                         }
                         log.info("прочитали {}",request.getMessages());
                     }else{

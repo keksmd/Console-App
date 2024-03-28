@@ -1,11 +1,16 @@
 package main;
 
+import commands.Add;
+
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 
 public class Request extends Message{
     public Request(){
 
     }
+
+
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();

@@ -10,10 +10,13 @@ public class Info extends Command implements methods{
     public String toString() {
         return super.toString();
     }
-    public Response calling(){
-        Response resp = super.calling();
-        resp.addMessage("В коллекции : "+CollectionManager.collection.getClass().getName()+", обновленной "+CollectionManager.lastUpdated+",хранится "+CollectionManager.collection.size()+" элементов");
-        //resp.addMessage(String.format("В коллекции : %s, обновленной %s,хранится %d элементов", CollectionManager.collection.getClass().getName(), CollectionManager.lastUpdated, CollectionManager.collection.size()));
+    public Response calling(String[] a){
+        Response resp = super.calling(a);
+        //resp.addMessage("В коллекции : "+CollectionManager.collection.getClass().getName()+", обновленной "+CollectionManager.lastUpdated+",хранится "+CollectionManager.collection.size()+" элементов");
+        resp.addMessage(String.format("В коллекции : %s, обновленной %s,хранится %d элементов", CollectionManager.collection.getClass().getName(), CollectionManager.lastUpdated, CollectionManager.collection.size()));
         return resp;
+    }
+    public Command castInto(Command name){
+        return (Info)name;
     }
 }

@@ -10,9 +10,14 @@ public class FilterHeight extends Command implements methods{
     public String toString() {
         return super.toString();
     }
-    public Response calling(){
-        Response resp = super.calling();
-        CollectionManager.collection.stream().filter(w->w.getHeight()>Integer.parseInt(args[0])).forEach(System.out::println);
+    public Response calling(String[] a){
+        Response resp = super.calling(a);
+        StringBuilder s = new StringBuilder();
+        CollectionManager.collection.stream().filter(w->w.getHeight()>Integer.parseInt(args[0])).forEach(s::append);
+        resp.addMessage(s.toString());
         return resp;
+    }
+    public Command castInto(Command name){
+        return (FilterHeight)name;
     }
 }
