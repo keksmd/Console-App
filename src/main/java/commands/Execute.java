@@ -57,6 +57,7 @@ public class Execute extends Command implements methods{
             return resp;
         }
     }
+    private String name = "execute";
     public Command castInto(Command name){
         return (Execute)name;
     }

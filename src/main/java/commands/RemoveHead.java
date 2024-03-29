@@ -18,4 +18,5 @@ public class RemoveHead extends Command implements methods{
     public Command castInto(Command name){
         return (RemoveHead)name;
     }
+    private String name = "remove_head";
 }

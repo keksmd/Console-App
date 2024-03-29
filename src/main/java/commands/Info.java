@@ -16,7 +16,6 @@ public class Info extends Command implements methods{
         resp.addMessage(String.format("В коллекции : %s, обновленной %s,хранится %d элементов", CollectionManager.collection.getClass().getName(), CollectionManager.lastUpdated, CollectionManager.collection.size()));
         return resp;
     }
-    public Command castInto(Command name){
-        return (Info)name;
-    }
+    private String name = "info";
+
 }

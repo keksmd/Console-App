@@ -9,6 +9,7 @@ import utilites.interfaces.methods;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class Command implements methods {
@@ -21,6 +22,7 @@ public class Command implements methods {
     public Response calling(String[] a){
         Response resp = new Response();
         this.args =a;
+        this.name = name;
         resp.setSuccess(true);
         return resp;
     }
@@ -28,7 +30,13 @@ public class Command implements methods {
         return commandReader(name).castInto(this);
     }
     public Command castInto(Command name){
-        return (Command) name;
+
+        try {
+            name = this.getClass().getConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        return  name;
     }
 
     /**
@@ -60,7 +68,7 @@ public class Command implements methods {
 
         return s.toString();
     }
-    private String name ;
+    private String name = "command" ;
 
 
     public String getName() {

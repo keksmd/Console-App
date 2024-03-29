@@ -23,9 +23,7 @@ public class Add extends Command implements methods{
     public String toString() {
         return super.toString();
     }
-    public Command castInto(Command name){
-        return (Add)name;
-    }
+    private String name = "add";
     public Response calling(String[] a){
         Response resp = super.calling(a);
 

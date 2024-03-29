@@ -15,6 +15,7 @@ public class Show extends Command implements methods{
                 w -> resp.addMessage(w+"\n"));
         return resp;
     }
+    private String name = "show";
     public Command castInto(Command name){
         return (Show)name;
     }

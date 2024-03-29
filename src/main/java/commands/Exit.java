@@ -16,7 +16,8 @@ public class Exit extends Command implements methods{
         return resp;
 
     }
-    public Command castInto(Command name){
-        return (Exit)name;
-    }
+
+    private String name = "exit";
+
+
 }

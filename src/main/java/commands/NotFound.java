@@ -15,7 +15,6 @@ public class NotFound extends Command implements methods{
         resp.setSuccess(false);
         return resp;
     }
-    public Command castInto(Command name){
-        return (NotFound)name;
-    }
+    private String name = "not_found";
+
 }

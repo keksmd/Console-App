@@ -27,4 +27,7 @@ public class GroupByWeapon extends Command implements methods{
     public Command castInto(Command name){
         return (GroupByWeapon)name;
     }
+
+    private String name = "group_counting_by_weapon_type";
+
 }

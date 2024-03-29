@@ -17,6 +17,7 @@ public class RemoveById extends Command implements methods{
         }
         return resp;
     }
+    private String name = "remove_by_id";
     public Command castInto(Command name){
         return (RemoveById)name;
     }

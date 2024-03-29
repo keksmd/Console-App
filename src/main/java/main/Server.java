@@ -82,7 +82,7 @@ public class Server {
 
                     }
                     if(request!=null){
-                        request.commandToExecute.revalidate(request.getMessages().get(0));
+                        //request.commandToExecute.revalidate(request.getMessages().get(0));
                         if(!request.getMessages().get(0).isBlank()){
                             log.info(request.getMessages().get(0));
                             nioSend(this.getClientChannel(),request.getCommandToExecute().calling(request.getMessages().toArray(String[]::new)));

@@ -18,9 +18,7 @@ public class AddIfMax extends Command implements methods{
     public String toString() {
         return super.toString();
     }
-    public Command castInto(Command name){
-        return (AddIfMax)name;
-    }
+    private String name = "add_if_max";
     public Response calling(String[] a){
         Response resp = super.calling(a);
         SpaceMarine spm = (

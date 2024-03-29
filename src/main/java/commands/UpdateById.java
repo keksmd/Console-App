@@ -21,6 +21,7 @@ public class UpdateById extends Command implements methods{
         resp.setSuccess(flag);
         return resp;
     }
+    private String name = "update_by_id";
     public Command castInto(Command name){
         return (UpdateById)name;
     }

@@ -42,7 +42,6 @@ public class AddIfMin extends Command implements methods{
         }
         return resp;
     }
-    public Command castInto(Command name){
-        return (AddIfMin)name;
-    }
+    private String name = "add_if_min";
+
 }

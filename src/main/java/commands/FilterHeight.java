@@ -17,6 +17,7 @@ public class FilterHeight extends Command implements methods{
         resp.addMessage(s.toString());
         return resp;
     }
+    private String name = "filter_greater_than_height";
     public Command castInto(Command name){
         return (FilterHeight)name;
     }
