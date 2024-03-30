@@ -10,8 +10,8 @@ public class PrintFieldDescendingLoyal extends Command implements methods{
     public Response calling(String[] a){
         Response resp = super.calling(a);
         StringBuilder s = new StringBuilder();
-            CollectionManager.collection.stream().filter(SpaceMarine::getLoyal).forEach(s::append);
-            CollectionManager.collection.stream().filter(w-> !w.getLoyal()).forEach(s::append);
+            CollectionManager.getCollectionStream().filter(SpaceMarine::getLoyal).forEach(s::append);
+            CollectionManager.getCollectionStream().filter(w-> !w.getLoyal()).forEach(s::append);
             resp.addMessage(s.toString());
             return resp;
 

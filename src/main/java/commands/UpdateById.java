@@ -10,8 +10,8 @@ import java.util.Arrays;
 public class UpdateById extends Command implements methods{
     public Response calling(String[] a){
         Response resp = super.calling(a);
-        if(CollectionManager.collection.stream().anyMatch(w->w.getId() == Integer.parseInt(args[0]))){
-            CollectionManager.collection.stream().filter(w->w.getId() == Integer.parseInt(args[0])).findFirst().get().update(Arrays.stream(this.getArgs()).skip(1).toArray(String[]::new));
+        if(CollectionManager.getCollectionStream().anyMatch(w->w.getId() == Integer.parseInt(args[0]))){
+            CollectionManager.getCollectionStream().filter(w->w.getId() == Integer.parseInt(args[0])).findFirst().get().update(Arrays.stream(this.getArgs()).skip(1).toArray(String[]::new));
         }else{
             resp.addMessage("Ошибка, не существует элемента с таким ID");
             resp.setSuccess(false);

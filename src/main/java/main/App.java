@@ -31,13 +31,13 @@ public class App {
             if (f.exists()) {
                 CollectionManager.lastUpdated = new Date(f.lastModified());
                 if (f.length() > 0) {
-                    CollectionManager.collection.addAll(readAndUpdate(fileName, new TypeReference<>() {
+                    CollectionManager.getCollection().addAll(readAndUpdate(fileName, new TypeReference<>() {
                     }));
                 }
             } else {
                 new File(fileName).createNewFile();
             }
-            CollectionManager.collection = CollectionManager.collection.stream().sorted().collect(Collectors.toCollection(PriorityQueue::new));
+            CollectionManager.setCollection(CollectionManager.getCollection().stream().sorted().collect(Collectors.toCollection(PriorityQueue::new)));
             Server server = new Server(8081);
 
             server.run();

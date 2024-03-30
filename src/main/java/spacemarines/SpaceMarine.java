@@ -84,7 +84,7 @@ public class SpaceMarine implements Comparable<SpaceMarine>  {
         this.weaponType = gun;
         this.chapter = ch;
         this.height = height;
-        this.id = CollectionManager.collection.size();
+        this.id = CollectionManager.getCollectionSize();
         this.creationDate = now();
 
 

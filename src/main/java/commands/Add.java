@@ -24,7 +24,7 @@ public class Add extends Command implements methods{
         Response resp = super.calling(a);
 
 
-        CollectionManager.collection.add(
+        CollectionManager.add(
                 new SpaceMarine(
                         (String) checkyRead("s",args[0]),
                         new Coordinates(
@@ -39,7 +39,7 @@ public class Add extends Command implements methods{
                         (String)checkyRead("s",args[7]),
                         (String)checkyRead("s",args[8]))));
 
-        CollectionManager.collection = CollectionManager.collection.stream().sorted().collect(Collectors.toCollection(PriorityQueue::new));
+        CollectionManager.setCollection(CollectionManager.getCollectionStream().sorted().collect(Collectors.toCollection(PriorityQueue::new)));
         return resp ;
 
     }

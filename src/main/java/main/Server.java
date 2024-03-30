@@ -43,7 +43,7 @@ public class Server {
         this.selector = selector;
     }
     public void  run() throws IOException {
-        try {
+
             while (true) {//true
                 log.info("Новый шаг бесконечного цикла по селектору");
                 CollectionManager.getWasExecuted().clear();
@@ -94,9 +94,6 @@ public class Server {
 
                 }
             }
-        }catch (IOException e){
-            log.error("сервер лег,долбоеб",e);
-        }
 
     }
 

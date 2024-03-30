@@ -8,10 +8,10 @@ import utilites.interfaces.methods;
 public class Show extends Command implements methods{
     public Response calling(String[] a){
         Response resp = super.calling(a);
-        if(CollectionManager.collection.isEmpty()){
+        if(CollectionManager.getCollection().isEmpty()){
             resp.addMessage("В коллекции нет элементов");
         }
-        CollectionManager.collection.forEach(
+        CollectionManager.getCollection().forEach(
                 w -> resp.addMessage(w+"\n"));
         return resp;
     }

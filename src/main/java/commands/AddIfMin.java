@@ -30,7 +30,7 @@ public class AddIfMin extends Command implements methods{
                         new Chapter(
                                 (String)checkyRead("s",args[7]),
                                 (String)checkyRead("s",args[8]))));
-        if(spm.compareTo(CollectionManager.collection.stream().min(Comparator.naturalOrder()).get())<0){
+        if(spm.compareTo(CollectionManager.getCollectionStream().min(Comparator.naturalOrder()).get())<0){
             new Add().calling(a);
         }
         else{

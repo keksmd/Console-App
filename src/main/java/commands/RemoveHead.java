@@ -8,7 +8,7 @@ import utilites.interfaces.methods;
 public class RemoveHead extends Command implements methods{
     public Response calling(String[] a){
         Response resp = super.calling(a);
-        CollectionManager.collection.poll();
+        CollectionManager.getCollection().poll();
         return resp;
     }
 

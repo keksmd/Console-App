@@ -12,7 +12,7 @@ public class GroupByWeapon extends Command implements methods{
     public Response calling(String[] a){
         Response resp = super.calling(a);
         StringBuilder s = new StringBuilder();
-        Arrays.stream(Weapon.values()).forEach(gun -> s.append(String.format("%s : %d%n", gun.name(), CollectionManager.collection.stream().filter(w -> w.getWeaponType() == gun).count())));
+        Arrays.stream(Weapon.values()).forEach(gun -> s.append(String.format("%s : %d%n", gun.name(), CollectionManager.getCollectionStream().filter(w -> w.getWeaponType() == gun).count())));
         resp.addMessage(s.toString());
         return resp;
     }
