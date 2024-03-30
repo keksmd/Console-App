@@ -1,8 +1,6 @@
 package main;
 
-import exceptions.Discntcd;
 import exceptions.LOLDIDNTREAD;
-import utilites.CheckingReader;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -11,11 +9,8 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
-import java.util.stream.Collectors;
 
 import static main.App.log;
-import static org.apache.logging.log4j.util.Strings.isBlank;
-import static utilites.ObjectConverter.toJson;
 import static utilites.ServerMessaging.nioRead;
 import static utilites.ServerMessaging.nioSend;
 
@@ -75,7 +70,7 @@ public class Server {
                         try {
                             request = nioRead(this.getClientChannel());
 
-                        } catch (IOException | LOLDIDNTREAD | Discntcd e) {
+                        } catch (IOException | LOLDIDNTREAD  e) {
                             request = null;
                             if (e instanceof LOLDIDNTREAD) {
                                 this.getClientChannel().close();

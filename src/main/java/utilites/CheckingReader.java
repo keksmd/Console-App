@@ -7,15 +7,9 @@
 package utilites;
 
 
-import exceptions.IncorrectCommandUsing;
-
-import java.io.IOException;
 import java.util.*;
 import java.util.function.Supplier;
 import exceptions.*;
-import  main.Server;
-
-import static utilites.ServerMessaging.*;
 
 
 public class CheckingReader {

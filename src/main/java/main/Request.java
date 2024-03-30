@@ -1,9 +1,6 @@
 package main;
 
-import commands.Add;
-
 import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 
 public class Request extends Message{
     public Request(){
@@ -14,7 +11,7 @@ public class Request extends Message{
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        s.append("***** "+this.getClass()+" Details *****\n");
+        s.append("***** ").append(this.getClass()).append(" Details *****\n");
         for(Field f: this.getClass().getFields()){
             try {
                 f.setAccessible(true);

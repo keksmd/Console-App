@@ -2,23 +2,18 @@
 package main;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import exceptions.Discntcd;
-import exceptions.LOLDIDNTREAD;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
 import static utilites.ObjectConverter.readAndUpdate;
-import static utilites.ServerMessaging.*;
 
 public class App {
     public static final Logger log = LogManager.getLogger();

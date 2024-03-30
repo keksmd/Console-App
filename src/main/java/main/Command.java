@@ -7,12 +7,8 @@ package main;
 import commands.*;
 import utilites.interfaces.methods;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class Command implements methods {
     /**
@@ -61,7 +57,7 @@ public class Command implements methods {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        s.append("***** "+this.getClass()+" Details *****\n");
+        s.append("***** ").append(this.getClass()).append(" Details *****\n");
         for(Field f:this.getClass().getFields()){
             try {
                 f.setAccessible(true);

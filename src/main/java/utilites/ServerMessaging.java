@@ -2,7 +2,6 @@ package utilites;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import exceptions.LOLDIDNTREAD;
-import exceptions.Discntcd;
 import main.Request;
 import main.Response;
 
