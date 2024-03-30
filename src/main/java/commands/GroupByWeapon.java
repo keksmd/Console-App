@@ -13,10 +13,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GroupByWeapon extends Command implements methods{
-    @Override
-    public String toString() {
-        return super.toString();
-    }
     public Response calling(String[] a){
         Response resp = super.calling(a);
         StringBuilder s = new StringBuilder();
@@ -24,10 +20,7 @@ public class GroupByWeapon extends Command implements methods{
         resp.addMessage(s.toString());
         return resp;
     }
-    public Command castInto(Command name){
-        return (GroupByWeapon)name;
-    }
 
-    private String name = "group_counting_by_weapon_type";
+    private final String name = "group_counting_by_weapon_type";
 
 }

@@ -11,12 +11,6 @@ public class RemoveHead extends Command implements methods{
         CollectionManager.collection.poll();
         return resp;
     }
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-    public Command castInto(Command name){
-        return (RemoveHead)name;
-    }
-    private String name = "remove_head";
+
+    private final String name = "remove_head";
 }

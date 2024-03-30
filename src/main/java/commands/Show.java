@@ -15,12 +15,5 @@ public class Show extends Command implements methods{
                 w -> resp.addMessage(w+"\n"));
         return resp;
     }
-    private String name = "show";
-    public Command castInto(Command name){
-        return (Show)name;
-    }
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+    private final String name = "show";
 }

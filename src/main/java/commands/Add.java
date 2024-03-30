@@ -19,11 +19,7 @@ public class Add extends Command implements methods{
 
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-    private String name = "add";
+    private final String name = "add";
     public Response calling(String[] a){
         Response resp = super.calling(a);
 
@@ -42,8 +38,8 @@ public class Add extends Command implements methods{
                 new Chapter(
                         (String)checkyRead("s",args[7]),
                         (String)checkyRead("s",args[8]))));
-            CollectionManager.collection = CollectionManager.collection.stream().sorted().collect(Collectors.toCollection(PriorityQueue::new));
 
+        CollectionManager.collection = CollectionManager.collection.stream().sorted().collect(Collectors.toCollection(PriorityQueue::new));
         return resp ;
 
     }

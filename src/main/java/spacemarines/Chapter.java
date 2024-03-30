@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Chapter {
     @JsonIgnore
-    static ArrayList<Chapter> chapters = new ArrayList<>();
+    static final ArrayList<Chapter> chapters = new ArrayList<>();
     private String name; //Поле не может быть null, Строка не может быть пустой
     private String parentLegion;
     private String world; //Поле не может быть null

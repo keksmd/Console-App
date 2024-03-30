@@ -4,10 +4,6 @@ import main.*;
 import utilites.interfaces.*;
 
 public class Exit extends Command implements methods{
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 
     public Response calling(String[] a){
         Response resp = super.calling(a);
@@ -17,7 +13,7 @@ public class Exit extends Command implements methods{
 
     }
 
-    private String name = "exit";
+    private final String name = "exit";
 
 
 }

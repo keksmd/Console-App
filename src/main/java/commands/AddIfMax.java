@@ -14,11 +14,7 @@ import java.util.Comparator;
 import static utilites.CheckingReader.checkyRead;
 
 public class AddIfMax extends Command implements methods{
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-    private String name = "add_if_max";
+    private final String name = "add_if_max";
     public Response calling(String[] a){
         Response resp = super.calling(a);
         SpaceMarine spm = (

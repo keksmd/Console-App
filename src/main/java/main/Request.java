@@ -27,7 +27,7 @@ public class Request extends Message{
 
         return s.toString();
     }
-    Command commandToExecute;
+    public Command commandToExecute;
     public Command getCommandToExecute() {
         return commandToExecute;
     }

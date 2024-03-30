@@ -11,6 +11,8 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Command implements methods {
     /**
@@ -21,6 +23,7 @@ public class Command implements methods {
      */
     public Response calling(String[] a){
         Response resp = new Response();
+        //resp.setMessages(Arrays.stream(new String[] {"сообщение по умолчанию"}).collect(Collectors.toCollection(ArrayList::new)));
         this.args =a;
         this.name = name;
         resp.setSuccess(true);
@@ -30,13 +33,16 @@ public class Command implements methods {
         return commandReader(name).castInto(this);
     }
     public Command castInto(Command name){
-
+        Command answer;
         try {
-            name = this.getClass().getConstructor().newInstance();
+            answer = this.getClass().getConstructor().newInstance() ;
+            answer.setArgs(name.getArgs());
+            answer.setName(name.getName());
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
-        return  name;
+
+        return  answer;
     }
 
     /**
@@ -109,9 +115,6 @@ public class Command implements methods {
                     upd.setArgs(new String[] {words[1]});
                     cmd = upd;
                     break;
-                /*case "execute_script":
-                    cmd = new Execute(words[1]);
-                    break;*/
 
                 case "remove_by_id":
                     RemoveById rmd = new RemoveById();

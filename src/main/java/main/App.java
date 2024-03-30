@@ -14,6 +14,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.PriorityQueue;
+import java.util.stream.Collectors;
 
 import static utilites.ObjectConverter.readAndUpdate;
 import static utilites.ServerMessaging.*;
@@ -40,11 +42,12 @@ public class App {
             } else {
                 new File(fileName).createNewFile();
             }
+            CollectionManager.collection = CollectionManager.collection.stream().sorted().collect(Collectors.toCollection(PriorityQueue::new));
             Server server = new Server(8081);
 
             server.run();
         }catch (IOException  e){
-            e.printStackTrace();
+            log.error("",e);
         }
 
     }

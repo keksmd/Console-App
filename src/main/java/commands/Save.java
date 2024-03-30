@@ -24,12 +24,6 @@ public class Save extends Command implements methods{
 
         return resp;
     }
-    private String name = "save";
-    public Command castInto(Command name){
-        return (Save)name;
-    }
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+    private final String name = "save";
+
 }

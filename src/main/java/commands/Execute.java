@@ -10,10 +10,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Execute extends Command implements methods{
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 
     final String fileName;
     public Execute(String fileName){
@@ -38,11 +34,6 @@ public class Execute extends Command implements methods{
                 while (fileContentScanner.hasNextLine()) {
                     var line = fileContentScanner.nextLine();
                     if (!line.equals("execute_script " + this.fileName)) {
-                        /*if (!new Command().commandReader(line).calling().isSuccess()) {
-                            new NotFound().calling();
-                        } else {
-                            flag = true;
-                        }*/
                     } else {
                         System.err.println("Ах ты шалунишка,не стоит делать рекурсионный вызов комманд, рекурсия была проинорирована");
                     }
@@ -57,8 +48,5 @@ public class Execute extends Command implements methods{
             return resp;
         }
     }
-    private String name = "execute";
-    public Command castInto(Command name){
-        return (Execute)name;
-    }
+    private final String name = "execute";
 }

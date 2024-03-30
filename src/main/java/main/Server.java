@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static main.App.log;
 import static org.apache.logging.log4j.util.Strings.isBlank;
+import static utilites.ObjectConverter.toJson;
 import static utilites.ServerMessaging.nioRead;
 import static utilites.ServerMessaging.nioSend;
 
@@ -47,59 +48,61 @@ public class Server {
         this.selector = selector;
     }
     public void  run() throws IOException {
-        while (true) {//true
-            log.info("Новый шаг бесконечного цикла по селектору");
-            CollectionManager.getWasExecuted().clear();
+        try {
+            while (true) {//true
+                log.info("Новый шаг бесконечного цикла по селектору");
+                CollectionManager.getWasExecuted().clear();
 
-            this.getSelector().select();
-            log.info("прошли selector");
-            Iterator<SelectionKey> keysIterator= this.getSelector().selectedKeys().iterator();
-            while (keysIterator.hasNext()){
-                log.info("взяли ключ");
-                SelectionKey key = keysIterator.next();
+                this.getSelector().select();
+                log.info("прошли selector");
+                Iterator<SelectionKey> keysIterator = this.getSelector().selectedKeys().iterator();
+                while (keysIterator.hasNext()) {
+                    log.info("взяли ключ");
+                    SelectionKey key = keysIterator.next();
 
-                Request request ;
-                if(key.isAcceptable()){
-                    log.info("ключ оказался доступным");
-                    this.setClientChannel(this.getServerSocketChannel().accept());
-                    this.clientChannel.configureBlocking(false);
+                    Request request;
+                    if (key.isAcceptable()) {
+                        log.info("ключ оказался доступным");
+                        this.setClientChannel(this.getServerSocketChannel().accept());
+                        this.clientChannel.configureBlocking(false);
 
-                    this.getClientChannel().register(this.getSelector(), SelectionKey.OP_READ);
-                    log.info("Зарегали на селектор с read");
-
-                }
-                if(key.isReadable()){
-                    log.info("ключ оказался читаемым");
-                    try{
-                        request= nioRead(this.getClientChannel());
-
-                    }catch (IOException | LOLDIDNTREAD | Discntcd e){
-                        request = null;
-                        if(e instanceof LOLDIDNTREAD){
-                            this.getClientChannel().close();
-                        }
-                        log.error("непрочитали(",e);
+                        this.getClientChannel().register(this.getSelector(), SelectionKey.OP_READ);
+                        log.info("Зарегали на селектор с read");
 
                     }
-                    if(request!=null){
-                        //request.commandToExecute.revalidate(request.getMessages().get(0));
-                        if(!request.getMessages().get(0).isBlank()){
-                            log.info(request.getMessages().get(0));
-                            nioSend(this.getClientChannel(),request.getCommandToExecute().calling(request.getMessages().toArray(String[]::new)));
+                    if (key.isReadable()) {
+                        log.info("ключ оказался читаемым");
+                        try {
+                            request = nioRead(this.getClientChannel());
+
+                        } catch (IOException | LOLDIDNTREAD | Discntcd e) {
+                            request = null;
+                            if (e instanceof LOLDIDNTREAD) {
+                                this.getClientChannel().close();
+                            }
+                            log.error("непрочитали(", e);
+
                         }
-                        log.info("прочитали {}",request.getMessages());
-                    }else{
-                        log.info("null" );
+                        if (request != null) {
+                            request.commandToExecute = request.commandToExecute.revalidate(request.getMessages().get(0));
+                            if (!request.getMessages().get(0).isBlank()) {
+                                nioSend(this.getClientChannel(), request.getCommandToExecute().calling(request.commandToExecute.getArgs()));
+                            }
+                        } else {
+                            log.info("null");
+                        }
+
+
                     }
 
-
+                    keysIterator.remove();
 
                 }
-
-                keysIterator.remove();
-
             }
+        }catch (IOException e){
+            log.error("сервер лег,долбоеб",e);
         }
+
     }
 
     public ServerSocketChannel getServerSocketChannel() {

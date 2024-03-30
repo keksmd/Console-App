@@ -15,7 +15,7 @@ import static main.App.log;
 
 public class ServerMessaging {
 
-    public static Request nioRead(SocketChannel clientChannel) throws IOException, LOLDIDNTREAD, Discntcd {
+    public static Request nioRead(SocketChannel clientChannel) throws IOException, LOLDIDNTREAD {
         ByteBuffer buf = ByteBuffer.allocate(1024);
         int readed= clientChannel.read(buf);
                 if (readed != -1) {

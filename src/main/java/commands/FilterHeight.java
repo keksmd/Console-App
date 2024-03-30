@@ -6,10 +6,6 @@ import main.Response;
 import utilites.interfaces.methods;
 
 public class FilterHeight extends Command implements methods{
-    @Override
-    public String toString() {
-        return super.toString();
-    }
     public Response calling(String[] a){
         Response resp = super.calling(a);
         StringBuilder s = new StringBuilder();
@@ -17,8 +13,5 @@ public class FilterHeight extends Command implements methods{
         resp.addMessage(s.toString());
         return resp;
     }
-    private String name = "filter_greater_than_height";
-    public Command castInto(Command name){
-        return (FilterHeight)name;
-    }
+    private final String name = "filter_greater_than_height";
 }

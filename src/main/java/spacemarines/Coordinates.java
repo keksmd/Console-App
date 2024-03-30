@@ -20,7 +20,7 @@ public class Coordinates {
     public Coordinates(){};
     @Override
     public String toString(){
-        return valueOf(x)+","+valueOf(y);
+        return x +","+ y;
     }
 
     public void setX(Long x) {

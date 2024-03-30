@@ -14,10 +14,6 @@ import java.util.Comparator;
 import static utilites.CheckingReader.checkyRead;
 
 public class AddIfMin extends Command implements methods{
-    @Override
-    public String toString() {
-        return super.toString();
-    }
     public Response calling(String[] a){
         Response resp = super.calling(a);
         SpaceMarine spm = (
@@ -42,6 +38,6 @@ public class AddIfMin extends Command implements methods{
         }
         return resp;
     }
-    private String name = "add_if_min";
+    private final String name = "add_if_min";
 
 }

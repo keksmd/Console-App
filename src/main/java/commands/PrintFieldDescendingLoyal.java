@@ -16,12 +16,5 @@ public class PrintFieldDescendingLoyal extends Command implements methods{
             return resp;
 
     }
-    private String name = "print_field_descending_loyal";
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-    public Command castInto(Command name){
-        return (PrintFieldDescendingLoyal)name;
-    }
+    private final String name = "print_field_descending_loyal";
 }
