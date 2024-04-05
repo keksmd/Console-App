@@ -1,1 +1,3 @@
-{"id":0,"name":"pidor","loyal":true,"height":4.4,"weaponType":"GRENADE_LAUNCHER"}
+{"id":1,"name":"444","coordinates":{"x":44,"y":44.0},"creationDate":"01-03-2024 20:03","health":444,"loyal":true,"height":444.0,"weaponType":"BOLT_PISTOL","chapter":{"name":"444","parentLegion":"","world":"444"}}
+{"id":0,"name":"name","coordinates":{"x":4,"y":4.4},"creationDate":"24-02-2024 14:02","health":5,"loyal":true,"height":5.5,"weaponType":"BOLT_PISTOL","chapter":{"name":"ff","parentLegion":"","world":"gg"}}
+{"id":2,"name":"name","coordinates":{"x":34,"y":3.0},"creationDate":"20-03-2024 02:16","health":56,"loyal":true,"height":4.0,"weaponType":"BOLT_PISTOL","chapter":{"name":"chha","parentLegion":"","world":"rkk"}}
