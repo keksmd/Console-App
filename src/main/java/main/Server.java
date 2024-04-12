@@ -3,16 +3,19 @@ package main;
 import exceptions.LOLDIDNTREAD;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.net.SocketException;
+import java.nio.channels.*;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.concurrent.LinkedBlockingDeque;
 
+import static java.nio.channels.SelectionKey.OP_READ;
 import static main.App.log;
+import static utilites.AccessingAllClassesInPackage.getAllClasses;
 import static utilites.ServerMessaging.nioRead;
+import static utilites.ServerMessaging.nioSend;
 
 
 public class Server {
@@ -65,47 +68,93 @@ public class Server {
                         log.info("ключ оказался доступным");
                         this.setClientChannel(this.getServerSocketChannel().accept());
                         this.client.channel.configureBlocking(false);
-                        this.getClientChannel().register(this.getSelector(), SelectionKey.OP_READ);
+                        this.getClientChannel().register(this.getSelector(), OP_READ);
                         log.info("Зарегали на селектор с read");
-                        new Sender(this).start();
                     }
                     if (key.isReadable()) {
                         Request request = null;
+
                         log.info("ключ оказался читаемым");
                         try {
                             request = nioRead(this.getClientChannel());
 
                         } catch (IOException | LOLDIDNTREAD e) {
-                            if (e instanceof LOLDIDNTREAD) {
+                            /*if (e instanceof LOLDIDNTREAD) {
                                 try {
                                     this.getClientChannel().close();
                                 } catch (IOException ex) {
                                     throw new RuntimeException(ex);
                                 }
                             }
+
+                             */
                             log.error("непрочитали(", e);
                         }
                         if (request != null) {
                             requests.add(request);
 
-                                /*try {
-                                    this.getClientChannel().register(this.getSelector(), SelectionKey.OP_WRITE, SelectionKey.OP_READ);
-                                } catch (ClosedChannelException e) {
-                                    throw new RuntimeException(e);
-                                }*/
+                            try {
+                                this.getClientChannel().register(this.getSelector(), SelectionKey.OP_WRITE, OP_READ);
+                            } catch (ClosedChannelException ignored) {
+                            }
                         }
                     }
                     if (key.isWritable()) {
 
                         log.info("ключ оказался писаемым");
+                        Request request = requests.poll();
+                        if (request != null) {
+                            if (request.getMessages().get(0).equals("commands") && client.firstMessageFromClient) {
+                                this.client.firstMessageFromClient = false;
+                                StringBuilder sb = new StringBuilder();
+                                getAllClasses("commands").stream().
+                                        filter(w ->
+                                                Arrays.stream(w.getFields()).anyMatch(
+                                                        x -> (x.getName().equals("commandType"))) &&
+                                                        Arrays.stream(w.getFields()).anyMatch(
+                                                                y -> y.getName().equals("name"))).
+                                        forEach(w -> {
+                                            try {
+                                                sb.append(w.getField("name").get(w.getConstructor().newInstance())).append(",").append(w.getField("commandType").get(w.getConstructor().newInstance()).toString()).append(";");
+                                            } catch (IllegalAccessException | NoSuchFieldException |
+                                                     NoSuchMethodException |
+                                                     InstantiationException |
+                                                     InvocationTargetException e) {
+                                            }
+                                        });
 
-                        //this.getClientChannel().register(this.getSelector(), SelectionKey.OP_READ);
+                                try {
+                                    nioSend(this.getClientChannel(), sb.toString());
+                                } catch (IOException e) {
+                                }
+
+                            } else {
+
+                                request.commandToExecute = request.commandToExecute.revalidate(request.getMessages().get(0));
 
 
+                                try {
+                                    Thread.sleep(5000);
+                                    nioSend(this.getClientChannel(), request.getCommandToExecute().calling(request.commandToExecute.getArgs(), request.getCommandToExecute().getValue()));
+                                } catch (IOException e) {
+                                    flag = false;
+                                }
+
+                            }
+
+                        } else {
+                            log.info("null");
+                        }
+                        if (flag) {
+                            this.getClientChannel().register(this.getSelector(), OP_READ);
+                        }
+                        flag = true;
                     }
 
                     keysIterator.remove();
                 }
+            } catch (SocketException | ClosedChannelException e) {
+                client.channel.close();
             } catch (Exception e) {
                 log.error("ошибка,сервер чуть не лег", e);
             }
